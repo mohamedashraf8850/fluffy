@@ -17,9 +17,9 @@ class _CatHomePageState extends State<CatHomePage> {
         child:  Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              homeSearch(),
-              catPackage(),
-              catList()
+              homeSearch(context),
+              Expanded(child: catPackage()),
+              Expanded(child: catList())
             ],
           ),
       ),

@@ -21,15 +21,13 @@ Widget catItem(txt, img) {
 }
 
 Widget catList() {
-  return Wrap(
-     children: <Widget>[
-       ListView.builder(
-         itemCount: 5,
-         scrollDirection: Axis.horizontal,
-         itemBuilder:(context, index) {
-           return packageItem("Bread&Bakery $index",
-               'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg');
-         },),
-     ],
+  return Expanded (
+    child: ListView.builder(
+      itemCount: 5,
+      scrollDirection: Axis.horizontal,
+      itemBuilder:(context, index) {
+        return catItem("Bread&Bakery $index",
+            'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg');
+      },),
   );
 }
