@@ -9,27 +9,35 @@ class BasicScaffold extends StatefulWidget {
 class _BasicScaffoldState extends State<BasicScaffold> {
   int _selectedIndex = 0;
 
+  static List pages = [
+    HomePage(),
+    HomePage(),
+    HomePage(),
+  ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: new Image.asset('assets/HomeIcon.png'),
+            icon: new Image.asset('assets/HomeIcon.png',width: 15,height: 15,color: _selectedIndex == 0?FluffyColors.BrandColor:null,),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: new Image.asset('assets/OrderIcon.png'),
+            icon: new Image.asset('assets/OrderIcon.png',width: 15,height: 15,color: _selectedIndex == 1?FluffyColors.BrandColor:null,),
             title: Text('Business'),
           ),
           BottomNavigationBarItem(
-            icon: new Image.asset('assets/ProfileIcon.png'),
+            icon: new Image.asset('assets/ProfileIcon.png',width: 15,height: 15,color: _selectedIndex == 2?FluffyColors.BrandColor:null,),
             title: Text('School'),
           ),
         ],

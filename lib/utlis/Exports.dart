@@ -20,3 +20,5 @@ export 'package:fluffyclientside/Screens/NavigationContent/Home/Search/SearchToo
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Packages/PackagesBar.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/catItem.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/CategoriesHome.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/HomePage.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/BottomDrawer/Bottom_Nav_Draw_Bar.dart';
