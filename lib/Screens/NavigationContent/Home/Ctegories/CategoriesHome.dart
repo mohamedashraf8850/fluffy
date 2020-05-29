@@ -19,7 +19,7 @@ class _CatHomePageState extends State<CatHomePage> {
             children: <Widget>[
               homeSearch(context),
               Expanded(child: catPackage()),
-              Expanded(child: catList())
+              catList()
             ],
           ),
       ),

@@ -3,18 +3,30 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 
 Widget catItem(txt, img) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    textDirection: TextDirection.ltr,
+    textBaseline: TextBaseline.alphabetic,
     children: <Widget>[
-      ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        child: Image.network(
-          img,
-          width: 50,
-          height: 50,
+      Padding(
+        padding: const EdgeInsets.only(right: 25.0),
+        child: ClipRRect(
+          borderRadius: new BorderRadius.circular(10.0),
+          child: Image.network(
+            img,
+            fit: BoxFit.fitWidth,
+            width: 150,
+            height: 150,
+          ),
         ),
       ),
       Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Text(txt,textAlign: TextAlign.center,style: TextStyle(fontSize: 15,color: Colors.black),),
+        padding: const EdgeInsets.only(top:5.0,left: 8.0),
+        child: Text(
+          txt,
+          style: TextStyle(fontSize: 13, color: Colors.black),
+          textAlign: TextAlign.start,
+        ),
       ),
     ],
   );
@@ -22,9 +34,11 @@ Widget catItem(txt, img) {
 
 Widget catList() {
   return Expanded (
+    flex: 2,
     child: ListView.builder(
       itemCount: 5,
       scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
       itemBuilder:(context, index) {
         return catItem("Bread&Bakery $index",
             'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg');
