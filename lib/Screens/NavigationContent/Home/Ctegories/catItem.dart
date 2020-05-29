@@ -3,20 +3,20 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 
 Widget catItem(txt, img) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
     textDirection: TextDirection.ltr,
     textBaseline: TextBaseline.alphabetic,
     children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(right: 25.0),
+        padding: const EdgeInsets.only(right: 1.0,left: 1.0),
         child: ClipRRect(
           borderRadius: new BorderRadius.circular(10.0),
           child: Image.network(
             img,
-            fit: BoxFit.fitWidth,
-            width: 150,
-            height: 150,
+            fit: BoxFit.fill,
+            width: 170,
+            height: 120,
           ),
         ),
       ),
@@ -35,9 +35,10 @@ Widget catItem(txt, img) {
 Widget catList() {
   return Expanded (
     flex: 2,
-    child: ListView.builder(
+    child: GridView.builder(
       itemCount: 5,
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       shrinkWrap: true,
       itemBuilder:(context, index) {
         return catItem("Bread&Bakery $index",

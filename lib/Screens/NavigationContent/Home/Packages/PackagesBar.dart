@@ -2,18 +2,18 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 
 Widget packageItem(txt, img, BuildContext context) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.start,
     textDirection: TextDirection.ltr,
     textBaseline: TextBaseline.alphabetic,
     children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(right: 25.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: ClipRRect(
           borderRadius: new BorderRadius.circular(10.0),
           child: Image.network(
             img,
-            fit: BoxFit.fitWidth,
+            fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width - 150,
             height: 120,
           ),
