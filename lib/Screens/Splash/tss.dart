@@ -1,4 +1,3 @@
-
 import 'package:fluffyclientside/utlis/Exports.dart';
 
 class ThirdSplashScreen extends StatefulWidget {
@@ -29,7 +28,7 @@ class _ThirdSplashScreenState extends State<ThirdSplashScreen> {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10.0,bottom: 20),
+                padding: const EdgeInsets.only(left: 10.0, bottom: 20),
                 child: Container(
                   height: 50,
                   child: VerticalDivider(

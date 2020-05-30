@@ -28,7 +28,7 @@ class _SecondSplashScreenState extends State<SecondSplashScreen> {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10.0,bottom: 20),
+                padding: const EdgeInsets.only(left: 10.0, bottom: 20),
                 child: Container(
                   height: 50,
                   child: VerticalDivider(

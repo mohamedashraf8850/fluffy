@@ -12,7 +12,6 @@ class _FourthLocationSplashScreenState
   getLocation() async {
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
   }
 
   @override
@@ -75,7 +74,7 @@ class _FourthLocationSplashScreenState
               width: MediaQuery.of(context).size.width - 15,
               child: RaisedButton(
                 onPressed: () {
-                  if (position.longitude == null || position.latitude == null){
+                  if (position.longitude == null || position.latitude == null) {
                     Fluttertoast.showToast(
                       msg: "Please Turn on your GPS or Location Sensor",
                       toastLength: Toast.LENGTH_SHORT,
@@ -83,8 +82,11 @@ class _FourthLocationSplashScreenState
                       backgroundColor: Colors.red.withOpacity(0.3),
                       gravity: ToastGravity.CENTER,
                     );
-                  }else {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BasicScaffold()), (Route<dynamic> route) => false);
+                  } else {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => BasicScaffold()),
+                        (Route<dynamic> route) => false);
                     print(position.latitude.toString());
                     print(position.longitude.toString());
                   }

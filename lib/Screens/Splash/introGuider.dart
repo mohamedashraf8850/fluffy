@@ -12,7 +12,7 @@ class IntroGuiderState extends State<IntroGuider> {
 
     if (_seen) {
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new Home()));
+          new MaterialPageRoute(builder: (context) => new BasicScaffold()));
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(

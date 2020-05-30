@@ -20,7 +20,7 @@ Widget packageItem(txt, img, BuildContext context) {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(top:5.0,left: 8.0),
+        padding: const EdgeInsets.only(top: 5.0, left: 8.0),
         child: Text(
           txt,
           style: TextStyle(fontSize: 13, color: Colors.black),
@@ -36,15 +36,18 @@ Widget catPackage() {
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(top: 20.0,left: 8.0,right: 8.0,bottom: 10),
+        padding:
+            const EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0, bottom: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
               'Special packages',
-              style: TextStyle(color: FluffyColors.BrandColor, fontSize: 17,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: FluffyColors.BrandColor,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
-
             ),
             Text(
               'See all',
@@ -57,7 +60,10 @@ Widget catPackage() {
       Expanded(
         flex: 1,
         child: Padding(
-          padding: const EdgeInsets.only(right:8,left:8,),
+          padding: const EdgeInsets.only(
+            right: 8,
+            left: 8,
+          ),
           child: ListView.builder(
             itemCount: 5,
             scrollDirection: Axis.horizontal,

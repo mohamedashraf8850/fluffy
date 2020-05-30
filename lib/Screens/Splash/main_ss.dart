@@ -1,6 +1,5 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-
 class MainSplashScreen extends StatefulWidget {
   @override
   _MainSplashScreenState createState() => _MainSplashScreenState();
@@ -58,8 +57,12 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
-                      onTap: (){
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FourthLocationSplashScreen()), (Route<dynamic> route) => false);
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FourthLocationSplashScreen()),
+                            (Route<dynamic> route) => false);
                       },
                     ),
                     Padding(
@@ -73,8 +76,12 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
                           pageIndex = ++_currentPageNotifier.value;
                           _pageController.nextPage(
                               duration: _kDuration, curve: _kCurve);
-                        }else {
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => FourthLocationSplashScreen()), (Route<dynamic> route) => false);
+                        } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FourthLocationSplashScreen()),
+                              (Route<dynamic> route) => false);
                         }
                       },
                       shape: RoundedRectangleBorder(

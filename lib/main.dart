@@ -7,16 +7,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     return MaterialApp(
       title: 'JChat',
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.light(),
-     // home:IntroGuider(),
-   //   home:MainSplashScreen(),
-      home:FourthLocationSplashScreen(),
+      home: IntroGuider(),
+      //   home:MainSplashScreen(),
+      // home:MainSplashScreen(),
     );
   }
 }
