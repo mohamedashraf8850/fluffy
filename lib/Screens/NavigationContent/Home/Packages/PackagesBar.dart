@@ -11,11 +11,13 @@ Widget packageItem(txt, img, BuildContext context) {
         padding: const EdgeInsets.only(right: 10.0),
         child: ClipRRect(
           borderRadius: new BorderRadius.circular(10.0),
-          child: Image.network(
-            img,
-            fit: BoxFit.fill,
-            width: MediaQuery.of(context).size.width - 150,
-            height: 120,
+          child: GestureDetector(
+            child: Image.network(
+              img,
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).size.width - 150,
+              height: 120,
+            ),
           ),
         ),
       ),

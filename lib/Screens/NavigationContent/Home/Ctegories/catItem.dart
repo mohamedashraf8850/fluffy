@@ -11,11 +11,14 @@ Widget catItem(txt, img) {
         padding: const EdgeInsets.only(right: 1.0, left: 1.0),
         child: ClipRRect(
           borderRadius: new BorderRadius.circular(10.0),
-          child: Image.network(
-            img,
-            fit: BoxFit.fill,
-            width: 170,
-            height: 120,
+          child: GestureDetector(
+            onTap: null,
+            child: Image.network(
+              img,
+              fit: BoxFit.fill,
+              width: 170,
+              height: 120,
+            ),
           ),
         ),
       ),

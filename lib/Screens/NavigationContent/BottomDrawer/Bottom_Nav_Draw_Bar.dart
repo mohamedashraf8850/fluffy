@@ -10,7 +10,7 @@ class _BasicScaffoldState extends State<BasicScaffold> {
 
   static List pages = [
     HomePage(),
-    Container(child: Text("Order Page Under Working...")),
+    MyOrderTabs(),
     Container(child: Text("Profile Page Under Working...")),
   ];
   void _onItemTapped(int index) {

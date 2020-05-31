@@ -5,6 +5,7 @@ class FluffyColors {
   static const VerticalColor = Color(0xFFFDD7AB);
   static const TextColor = Color(0xFF3E3E3E);
   static const LocationColor = Color(0xFF7F7F7F);
+  static const NotSelectedColor = Color(0xFF9E9E9E);
 }
 
 Widget fluffyCart() {

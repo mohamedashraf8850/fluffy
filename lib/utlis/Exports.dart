@@ -22,3 +22,5 @@ export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/catIte
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/CategoriesHome.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/HomePage.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/BottomDrawer/Bottom_Nav_Draw_Bar.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Orders/AppBar/AppBarOrder.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Orders/MyOrderTabs/OrderTabs.dart';
