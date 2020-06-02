@@ -1,4 +1,5 @@
-import'package:fluffyclientside/utlis/Exports.dart';
+import 'package:fluffyclientside/utlis/Exports.dart';
+
 class MyOrderTabs extends StatefulWidget {
   @override
   _MyOrderTabsState createState() => _MyOrderTabsState();
@@ -14,8 +15,8 @@ class _MyOrderTabsState extends State<MyOrderTabs> {
         appBar: orderAppBar(),
         body: TabBarView(
           children: [
-            Icon(Icons.timer),
-            Icon(Icons.timer),
+            myInProgressOrders(context),
+            myRepeatedOrders(context),
             Icon(Icons.timer),
           ],
         ),
