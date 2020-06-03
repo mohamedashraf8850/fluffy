@@ -1,16 +1,16 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-class MyRepeatedOrders extends StatefulWidget {
+class MyScheduledOrders extends StatefulWidget {
   @override
-  _MyRepeatedOrdersState createState() => _MyRepeatedOrdersState();
+  _MyScheduledOrdersState createState() => _MyScheduledOrdersState();
 }
 
-class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
+class _MyScheduledOrdersState extends State<MyScheduledOrders>
     with TickerProviderStateMixin {
   final List<Tab> tabs = <Tab>[
-    new Tab(text: "Pack 1"),
-    new Tab(text: "Pack 2"),
-    new Tab(text: "Pack 3")
+    new Tab(text: "25,Jan"),
+    new Tab(text: "23,Jan"),
+    new Tab(text: "1,April")
   ];
 
   TabController controller;
@@ -69,7 +69,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                       itemBuilder: (context, index) {
                         return orderItem(
                             img:
-                                'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
+                            'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                             itemPrice: '7.00',
                             qty: '4',
                             title: 'Rich Bake Shami Bread');
@@ -89,50 +89,42 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                           width: MediaQuery.of(context).size.width - 5,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom:16.0,top:8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                'Repeated on',
-                                style:
-                                    TextStyle(color: Colors.black, fontSize: 15),
+                                'Total',
+                                style: TextStyle(color: Colors.black, fontSize: 15),
                               ),
-                              Text(
-                                'Sun, Mon, Tue',
-                                style: TextStyle(
-                                    color: FluffyColors.LabelColor,
-                                    fontSize: 15,),
-                              ),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    '28.00',
+                                    style: TextStyle(color: Colors.black, fontSize: 15,fontWeight: FontWeight.bold),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left:2.0),
+                                    child: Text(
+                                      'EGP',
+                                      style: TextStyle(color: Colors.black, fontSize: 12),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            Text(
-                              'Total subscription',
-                              style:
-                              TextStyle(color: Colors.black, fontSize: 15),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  '28.00',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 2.0),
-                                  child: Text(
-                                    'EGP',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 12),
-                                  ),
-                                ),
-                              ],
+                            GestureDetector(
+                              child: Text(
+                                'Cancel Order',
+                                style:
+                                TextStyle(color: FluffyColors.BrandColor, fontSize: 15),
+                              ),
+                              onTap: null,
                             ),
                           ],
                         ),

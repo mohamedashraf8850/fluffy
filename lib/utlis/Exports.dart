@@ -27,3 +27,4 @@ export 'package:fluffyclientside/Screens/NavigationContent/Orders/MyOrderTabs/Or
 export 'package:fluffyclientside/Screens/NavigationContent/Orders/InProgress/InProgressOrders.dart';
 export 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Orders/Repeated/RepeatedOrders.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Orders/Scheduled/ScheduledOrders.dart';

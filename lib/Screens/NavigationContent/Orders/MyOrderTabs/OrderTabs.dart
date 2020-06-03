@@ -16,8 +16,8 @@ class _MyOrderTabsState extends State<MyOrderTabs> {
         body: TabBarView(
           children: [
             myInProgressOrders(context),
-            myRepeatedOrders(context),
-            Icon(Icons.timer),
+            MyRepeatedOrders(),
+            MyScheduledOrders(),
           ],
         ),
       ),
