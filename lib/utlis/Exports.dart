@@ -18,8 +18,8 @@ export 'package:badges/badges.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/AppBar/AppBarHome.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Search/SearchToolHome.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Packages/PackagesBar.dart';
-export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/catItem.dart';
-export 'package:fluffyclientside/Screens/NavigationContent/Home/Ctegories/CategoriesHome.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/catItem.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/CategoriesHome.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/HomePage.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/BottomDrawer/Bottom_Nav_Draw_Bar.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Orders/AppBar/AppBarOrder.dart';
@@ -28,3 +28,6 @@ export 'package:fluffyclientside/Screens/NavigationContent/Orders/InProgress/InP
 export 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Orders/Repeated/RepeatedOrders.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Orders/Scheduled/ScheduledOrders.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/AppBar/catAppBar.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/AdverPackage/AdverPack.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/Productes/Product.dart';

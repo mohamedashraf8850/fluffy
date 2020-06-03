@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     return MaterialApp(
-      title: 'JChat',
+      title: 'Fluffy',
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.light(),

@@ -34,7 +34,7 @@ Widget catItem(txt, img) {
   );
 }
 
-Widget catList() {
+Widget catList(BuildContext context) {
   return Expanded(
     flex: 2,
     child: GridView.builder(
@@ -44,8 +44,18 @@ Widget catList() {
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return catItem("Bread&Bakery $index",
-            'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg');
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CatHome()),
+            );
+          },
+          child: catItem(
+            "Bread&Bakery $index",
+            'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
+          ),
+        );
       },
     ),
   );
