@@ -1,23 +1,34 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
-Widget catAppBar(){
+
+Widget catAppBar() {
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
     backgroundColor: Colors.white,
     actions: <Widget>[
-      IconButton(icon: Icon(Icons.search,color: FluffyColors.BrandColor,size: 50,),onPressed: null,),
-      fluffyCart(),
+      Padding(
+        padding: const EdgeInsets.only(right: 5.0, top: 5.0),
+        child: IconButton(
+          icon: Icon(
+            Icons.search,
+            color: FluffyColors.BrandColor,
+            size: 20,
+          ),
+          onPressed: () {},
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 20.0, top: 5.0),
+        child: fluffyCart(),
+      ),
     ],
-    leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 10),
-    ),
-    bottom: PreferredSize(
-      child: Column(
-        children: <Widget>[
-          Center(child: Text('Subscribe for our Special \nbraed collections',style: TextStyle(color: FluffyColors.BrandColor),textAlign: TextAlign.center,)),
-          Expanded(child: adverCatPackage_Cate()),
-        ],
+    leading: Padding(
+      padding: const EdgeInsets.only(top: 5.0),
+      child: IconButton(
+        icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+        onPressed: () {},
       ),
     ),
+
   );
 }

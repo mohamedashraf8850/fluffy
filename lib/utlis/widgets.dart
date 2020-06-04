@@ -8,6 +8,7 @@ class FluffyColors {
   static const LocationColor = Color(0xFF7F7F7F);
   static const NotSelectedColor = Color(0xFF9E9E9E);
   static const LabelColor = Color(0xFF707070);
+  static const BGColor = Color(0xFFF7FAFD);
 }
 
 Widget fluffyCart() {

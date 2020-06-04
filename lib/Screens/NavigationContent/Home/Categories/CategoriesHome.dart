@@ -32,17 +32,40 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
       appBar: catAppBar(),
       backgroundColor: Colors.white,
       body: Scaffold(
-        appBar: TabBar(
-          isScrollable: true,
-          unselectedLabelColor: Colors.black,
-          labelColor: FluffyColors.BrandColor,
-          indicatorColor: FluffyColors.BrandColor,
-          indicatorSize: TabBarIndicatorSize.tab,
-          onTap: (value) {
-            print(value);
-          },
-          tabs: tabs,
-          controller: controller,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(260.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Subscribe for our Special \nbraed collections',
+                      style: TextStyle(
+                          color: FluffyColors.BrandColor, fontSize: 20,fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Expanded(child: adverCatPackage_Cate()),
+                  ],
+                ),
+              ),
+              TabBar(
+                isScrollable: true,
+                unselectedLabelColor: Colors.black,
+                labelColor: FluffyColors.BrandColor,
+                indicatorColor: FluffyColors.BrandColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                onTap: (value) {
+                  print(value);
+                },
+                tabs: tabs,
+                controller: controller,
+              ),
+            ],
+          ),
         ),
         body: TabBarView(
           controller: controller,
