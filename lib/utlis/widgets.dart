@@ -14,16 +14,21 @@ class FluffyColors {
 Widget fluffyCart() {
   return Badge(
     badgeContent: Text('0'),
-    child: Image.asset('assets/cartIcon.png',width: 25,height: 25,fit: BoxFit.fill,),
+    child: Image.asset(
+      'assets/cartIcon.png',
+      width: 25,
+      height: 25,
+      fit: BoxFit.fill,
+    ),
     animationType: BadgeAnimationType.slide,
   );
 }
 
-Widget orderItem({img, title, qty, itemPrice}) {
+Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
   return Row(
     children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(right:10.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: Image.network(
           img,
           width: 80,
@@ -40,50 +45,109 @@ Widget orderItem({img, title, qty, itemPrice}) {
               title,
               style: TextStyle(fontSize: 17, color: Colors.black),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Row(
+            cart == true
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        'Qty',
-                        style:
-                            TextStyle(fontSize: 15, color: FluffyColors.LabelColor),
-                      ),
-                      SizedBox(width: 5,),
-                      Text(
-                        qty,
-                        style: TextStyle(fontSize: 15, color: Colors.black,fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        itemPrice,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: FluffyColors.BrandColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left:2.0),
-                        child: Text(
-                          'EGP',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: FluffyColors.BrandColor,
-                              fontWeight: FontWeight.normal),
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            _itemCount != 0
+                                ? new IconButton(
+                                    icon: new Icon(Icons.remove),
+                                    onPressed: () {
+                                      _itemCount--;
+                                    },
+                                  )
+                                : new Container(),
+                            new Text(_itemCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                            new IconButton(
+                              icon: new Icon(Icons.add),
+                              onPressed: () {
+                                _itemCount++;
+                              },
+                            )
+                          ],
                         ),
                       ),
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              itemPrice,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: FluffyColors.BrandColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Text(
+                                'EGP',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: FluffyColors.BrandColor,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              'Qty',
+                              style: TextStyle(
+                                  fontSize: 15, color: FluffyColors.LabelColor),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              qty,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              itemPrice,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: FluffyColors.BrandColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Text(
+                                'EGP',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: FluffyColors.BrandColor,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
           ],
         ),
       )

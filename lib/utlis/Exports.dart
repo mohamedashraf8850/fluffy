@@ -31,3 +31,4 @@ export 'package:fluffyclientside/Screens/NavigationContent/Orders/Scheduled/Sche
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/AppBar/catAppBar.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/AdverPackage/AdverPack.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/Productes/Product.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Cart/CartAppBar/CartAppBar.dart';
