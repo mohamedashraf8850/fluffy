@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget homeAppBar() {
+Widget homeAppBar(context) {
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
@@ -31,7 +31,7 @@ Widget homeAppBar() {
           width: 200,
           height: 60,
         ),
-        fluffyCart(),
+        fluffyCart(context),
       ],
     ),
   );

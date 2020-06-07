@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget orderAppBar() {
+Widget orderAppBar(BuildContext context) {
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
@@ -16,7 +16,7 @@ Widget orderAppBar() {
               fontWeight: FontWeight.bold),
           textAlign: TextAlign.start,
         ),
-        fluffyCart(),
+        fluffyCart(context),
       ],
     ),
     leading: IconButton(

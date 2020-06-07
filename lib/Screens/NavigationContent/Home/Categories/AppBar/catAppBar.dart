@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget catAppBar() {
+Widget catAppBar(context) {
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
@@ -19,7 +19,7 @@ Widget catAppBar() {
       ),
       Padding(
         padding: const EdgeInsets.only(right: 20.0, top: 5.0),
-        child: fluffyCart(),
+        child: fluffyCart(context),
       ),
     ],
     leading: Padding(

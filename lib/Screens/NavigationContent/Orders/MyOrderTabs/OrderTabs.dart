@@ -12,7 +12,7 @@ class _MyOrderTabsState extends State<MyOrderTabs> {
       length: 3,
       initialIndex: 0,
       child: Scaffold(
-        appBar: orderAppBar(),
+        appBar: orderAppBar(context),
         body: TabBarView(
           children: [
             myInProgressOrders(context),

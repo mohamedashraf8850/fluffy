@@ -29,7 +29,7 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: catAppBar(),
+      appBar: catAppBar(context),
       backgroundColor: Colors.white,
       body: Scaffold(
         appBar: PreferredSize(

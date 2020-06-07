@@ -1,5 +1,4 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
-import 'package:flutter/cupertino.dart';
 
 class FluffyColors {
   static const BrandColor = Color(0xFF006661);
@@ -11,20 +10,27 @@ class FluffyColors {
   static const BGColor = Color(0xFFF7FAFD);
 }
 
-Widget fluffyCart() {
-  return Badge(
-    badgeContent: Text('0'),
-    child: Image.asset(
-      'assets/cartIcon.png',
-      width: 25,
-      height: 25,
-      fit: BoxFit.fill,
+Widget fluffyCart(BuildContext context) {
+  return GestureDetector(
+    child: Badge(
+      badgeContent: Text('0'),
+      child: Image.asset(
+        'assets/cartIcon.png',
+        width: 25,
+        height: 25,
+        fit: BoxFit.fill,
+      ),
+      animationType: BadgeAnimationType.slide,
     ),
-    animationType: BadgeAnimationType.slide,
+        onTap:(){
+      Navigator.of(context).push( MaterialPageRoute(
+          builder: (context) =>
+              MainCartPage()),);
+  },
   );
 }
 
-Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
+Widget orderItem(bool cart, {img, title, qty, itemPrice, itemCount}) {
   return Row(
     children: <Widget>[
       Padding(
@@ -43,7 +49,7 @@ Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(fontSize: 17, color: Colors.black),
+              style: TextStyle(fontSize: 17, color: cart == false ?Colors.black: FluffyColors.BrandColor),
             ),
             cart == true
                 ? Row(
@@ -52,24 +58,43 @@ Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
                       Container(
                         child: Row(
                           children: <Widget>[
-                            _itemCount != 0
-                                ? new IconButton(
-                                    icon: new Icon(Icons.remove),
-                                    onPressed: () {
-                                      _itemCount--;
-                                    },
-                                  )
+                            itemCount != 0
+                                ? SizedBox(
+                              width: 25,
+                              height: 25,
+                                  child: CircleAvatar(
+                              backgroundColor: FluffyColors.BrandColor,
+                              radius: 20,
+                                    child: new IconButton(
+                                        icon: new Icon(Icons.remove,color: Colors.white,size: 10,),
+                                        onPressed: () {
+                                          itemCount--;
+                                        },
+                                      ),
+                                  ),
+                                )
                                 : new Container(),
-                            new Text(_itemCount.toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
-                            new IconButton(
-                              icon: new Icon(Icons.add),
-                              onPressed: () {
-                                _itemCount++;
-                              },
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: new Text(itemCount.toString(),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            SizedBox(
+                              width: 25,
+                              height: 25,
+                              child: CircleAvatar(
+                                backgroundColor: FluffyColors.BrandColor,
+                                radius: 20,
+                                child: new IconButton(
+                                  icon: new Icon(Icons.add,color: Colors.white,size: 10,),
+                                  onPressed: () {
+                                    itemCount++;
+                                  },
+                                ),
+                              ),
                             )
                           ],
                         ),
@@ -78,10 +103,10 @@ Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              itemPrice,
+                               itemPrice,
                               style: TextStyle(
                                   fontSize: 15,
-                                  color: FluffyColors.BrandColor,
+                                  color: cart == true ?Colors.black: FluffyColors.BrandColor,
                                   fontWeight: FontWeight.bold),
                             ),
                             Padding(
@@ -90,7 +115,7 @@ Widget orderItem(bool cart, {img, title, qty, itemPrice, _itemCount}) {
                                 'EGP',
                                 style: TextStyle(
                                     fontSize: 12,
-                                    color: FluffyColors.BrandColor,
+                                    color: cart == true ?Colors.black: FluffyColors.BrandColor,
                                     fontWeight: FontWeight.normal),
                               ),
                             ),
