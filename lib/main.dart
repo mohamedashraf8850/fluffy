@@ -1,7 +1,10 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
 void main() {
-  runApp(NotifierProvider(child: MyApp()));
+  runApp(ChangeNotifierProvider(
+    create: (context) => Cart(),
+     child: NotifierProvider(child: MyApp())
+  ));
 }
 
 class MyApp extends StatelessWidget {

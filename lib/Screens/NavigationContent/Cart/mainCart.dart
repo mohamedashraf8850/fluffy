@@ -42,7 +42,6 @@ class _MainCartPageState extends State<MainCartPage> {
     }
     super.initState();
   }
-//01112458794
   _buildBody() {
     return Container(
       color: Colors.white,
@@ -117,7 +116,8 @@ class _MainCartPageState extends State<MainCartPage> {
           ],
           scrollDirection: Axis.horizontal,
           controller: _pageController,
-          onPageChanged: onPageViewChange),
+          onPageChanged: onPageViewChange
+      ),
     );
   }
 

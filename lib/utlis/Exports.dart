@@ -34,4 +34,7 @@ export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/Produ
 export 'package:fluffyclientside/Screens/NavigationContent/Cart/CartAppBar/CartAppBar.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Cart/Cartcontent/EditCart.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Cart/mainCart.dart';
+export 'package:provider/provider.dart';
+export 'package:fluffyclientside/models/Item.dart';
+export 'package:fluffyclientside/models/Cart.dart';
 

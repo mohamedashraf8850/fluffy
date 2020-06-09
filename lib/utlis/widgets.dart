@@ -11,22 +11,25 @@ class FluffyColors {
 }
 
 Widget fluffyCart(BuildContext context) {
-  return GestureDetector(
-    child: Badge(
-      badgeContent: Text('0'),
-      child: Image.asset(
-        'assets/cartIcon.png',
-        width: 25,
-        height: 25,
-        fit: BoxFit.fill,
+  return Consumer<Cart>(builder: (context, cart, child){
+   return GestureDetector(
+      child: Badge(
+        badgeContent: Text(cart.count.toString()),
+        child: Image.asset(
+          'assets/cartIcon.png',
+          width: 25,
+          height: 25,
+          fit: BoxFit.fill,
+        ),
+        animationType: BadgeAnimationType.slide,
       ),
-      animationType: BadgeAnimationType.slide,
-    ),
-        onTap:(){
-      Navigator.of(context).push( MaterialPageRoute(
-          builder: (context) =>
-              MainCartPage()),);
-  },
+          onTap:(){
+        Navigator.of(context).push( MaterialPageRoute(
+            builder: (context) =>
+                MainCartPage()),);
+    },
+    );
+  }
   );
 }
 
