@@ -70,6 +70,7 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
         body: TabBarView(
           controller: controller,
           children: tabs.map((Tab tab) {
+
             return productList();
           }).toList(),
         ),

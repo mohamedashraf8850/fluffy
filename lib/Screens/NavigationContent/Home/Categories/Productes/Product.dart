@@ -5,7 +5,6 @@ final List<Item> items = [
   Item(title: 'Gourmet Bread Rol with Red Olives ', price: 4.00,count: 1,id: '3'),
   Item(title: 'Gourmet Bread Rol with yellow Olives ', price: 5.00,count: 1,id: '4'),
   Item(title: 'Gourmet Bread Rol with orange Olives ', price: 6.00,count: 1,id: '5'),
-
 ];
 Widget productItem({img, title, count, price, addToCart}) {
   return Card(
@@ -115,7 +114,7 @@ Widget productList() {
                 title: items[index].title,
                 img:
                     'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
-                count: '3',
+                count: items[index].count.toString(),
                 price: items[index].price.toString(),
             addToCart: () {
               cart.add(items[index]);

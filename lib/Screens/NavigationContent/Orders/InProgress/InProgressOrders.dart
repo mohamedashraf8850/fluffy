@@ -29,6 +29,7 @@ Widget myInProgressOrders(BuildContext context) {
             itemBuilder: (context, index) {
               return orderItem(
                 false,
+                  context,
                   img:
                       'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                   itemPrice: '7.00',

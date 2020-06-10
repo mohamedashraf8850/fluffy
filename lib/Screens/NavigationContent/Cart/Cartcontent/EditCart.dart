@@ -32,7 +32,7 @@ class _EditCartPageState extends State<EditCartPage>
                             onDismissed: (direction) {
                               setState(() {
                                 cart.remove(cart.basketItems[index]);
-                                print(item);
+                                cart.basketItems.removeAt(index);
                               });
                             },
                             background: Container(
@@ -42,6 +42,8 @@ class _EditCartPageState extends State<EditCartPage>
                                   color: Colors.white,
                                 )),
                             child: orderItem(true,
+                                context ,
+                                index: index,
                                 img:
                                     'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                                 itemPrice:
