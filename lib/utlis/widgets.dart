@@ -65,7 +65,7 @@ Widget orderItem(bool listCart, BuildContext context,
                         Container(
                           child: Row(
                             children: <Widget>[
-                              itemCount != 0
+                             itemCount != "1"
                                   ? SizedBox(
                                       width: 25,
                                       height: 25,

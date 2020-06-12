@@ -35,6 +35,7 @@ class _EditCartPageState extends State<EditCartPage>
                                 cart.basketItems.removeAt(index);
                               });
                             },
+
                             background: Container(
                                 color: Colors.red,
                                 child: Icon(
