@@ -18,7 +18,7 @@ class _MainCartPageState extends State<MainCartPage> {
     return Scaffold(
       appBar: new PreferredSize(
         preferredSize: Size.fromHeight(100.0),
-        child: cartAppBar(title: titles, value: values, subTitle: subTitles,subTitlePosition: subTitlePosition),
+        child: cartAppBar(context,title: titles, value: values, subTitle: subTitles,subTitlePosition: subTitlePosition),
       ),
       body: SafeArea(
         child: _buildBody(),

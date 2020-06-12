@@ -1,14 +1,14 @@
 
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget cartAppBar({title , value , subTitle,double,subTitlePosition}) {
+Widget cartAppBar(BuildContext context,{title , value , subTitle,double,subTitlePosition}) {
 
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
     backgroundColor: Colors.white,
     title: Text(title,style: TextStyle(fontSize: 20,color: FluffyColors.BrandColor),),
-    leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
+    leading: IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black),onPressed: ()=> Navigator.of(context).pop(),),
     bottom: PreferredSize(
       preferredSize: Size.fromHeight(6.0),
       child: Column(
