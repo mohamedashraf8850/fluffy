@@ -205,17 +205,26 @@ Widget orderItem(bool listCart, BuildContext context,
 }
 
 Widget fluffyTextField(BuildContext context,
-    {String hintText, controller, bool suffix}) {
+    {String hintText,
+    controller,
+    bool suffix,
+    double size,
+    TextInputType type,
+    showSW,
+    showPass,
+    hidePass}) {
   return Container(
-    width: MediaQuery.of(context).size.width - 30,
+    width: MediaQuery.of(context).size.width - (size == null ? 30 : size),
     child: Theme(
       data: new ThemeData(
         primaryColor: FluffyColors.BrandColor,
         primaryColorDark: FluffyColors.BrandColor,
       ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         style: TextStyle(fontSize: 15),
+        keyboardType: type == null ? TextInputType.text : type,
+        obscureText: hidePass != null ? hidePass : false,
         decoration: new InputDecoration(
           border: new OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),
@@ -226,7 +235,16 @@ Widget fluffyTextField(BuildContext context,
           fillColor: FluffyColors.BrandColor,
           hoverColor: FluffyColors.BrandColor,
           focusColor: FluffyColors.BrandColor,
-          suffixText: suffix == true ? '+20' : null,
+          suffixText: suffix == true ? '+20  ' : null,
+          suffixIcon: showSW == true
+              ? IconButton(
+                  icon: Icon(
+                    hidePass == true ? Icons.lock_outline : Icons.lock_open,
+                    color: FluffyColors.BrandColor,
+                  ),
+                  onPressed: showPass,
+                )
+              : null,
           contentPadding: const EdgeInsets.only(left: 15.0),
         ),
       ),

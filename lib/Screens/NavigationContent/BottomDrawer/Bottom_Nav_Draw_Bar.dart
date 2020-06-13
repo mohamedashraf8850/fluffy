@@ -8,11 +8,7 @@ class BasicScaffold extends StatefulWidget {
 class _BasicScaffoldState extends State<BasicScaffold> {
   int _selectedIndex = 0;
 
-  static List pages = [
-    HomePage(),
-    MyOrderTabs(),
-    Container(child: Text("Profile Page Under Working...")),
-  ];
+  static List pages = [HomePage(), MyOrderTabs(), MainProfilePage()];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

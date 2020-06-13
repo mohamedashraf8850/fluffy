@@ -32,6 +32,7 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
       appBar: catAppBar(context),
       backgroundColor: Colors.white,
       body: Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(260.0),
           child: Column(

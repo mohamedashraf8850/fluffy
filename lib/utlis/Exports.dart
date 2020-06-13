@@ -39,3 +39,5 @@ export 'package:fluffyclientside/models/Item.dart';
 export 'package:fluffyclientside/models/Cart.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileAppBar/ProfileAppBar.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileContent/AdressDetails/AddressdetailsProfile.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Profile/mainProfile.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileContent/EditPersonalInfromation/Personal_Info.dart';

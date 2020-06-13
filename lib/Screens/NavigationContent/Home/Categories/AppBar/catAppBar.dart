@@ -26,7 +26,9 @@ Widget catAppBar(context) {
       padding: const EdgeInsets.only(top: 5.0),
       child: IconButton(
         icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
     ),
   );

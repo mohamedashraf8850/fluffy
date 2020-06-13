@@ -1,25 +1,38 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget addressDetails(BuildContext context) {
-  TextEditingController addressControlller = new TextEditingController();
-  TextEditingController blockControlller = new TextEditingController();
-  TextEditingController floorControlller = new TextEditingController();
+Widget addressDetails(BuildContext context,
+    {addressControlller, blockControlller, floorControlller}) {
   return Column(
     children: <Widget>[
-      Text(
-        'Details',
-        style: TextStyle(color: FluffyColors.BrandColor, fontSize: 10),
+      Padding(
+        padding: const EdgeInsets.only(left: 20.0, bottom: 10),
+        child: Row(
+          children: <Widget>[
+            Text(
+              'Details',
+              style: TextStyle(color: FluffyColors.BrandColor, fontSize: 20),
+            ),
+          ],
+        ),
       ),
       fluffyTextField(context,
           controller: addressControlller,
           hintText: 'Address details in Madenati, Cairo'),
-      Row(
-        children: <Widget>[
-          fluffyTextField(context,
-              controller: blockControlller, hintText: 'Block No.'),
-          fluffyTextField(context,
-              controller: floorControlller, hintText: 'Floor No.'),
-        ],
+      Padding(
+        padding: const EdgeInsets.all(17.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            fluffyTextField(context,
+                controller: blockControlller,
+                hintText: 'Block No.',
+                size: 200.0),
+            fluffyTextField(context,
+                controller: floorControlller,
+                hintText: 'Floor No.',
+                size: 200.0),
+          ],
+        ),
       ),
       RaisedButton(
         onPressed: () {},
