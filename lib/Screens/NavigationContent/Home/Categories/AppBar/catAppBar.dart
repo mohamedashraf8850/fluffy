@@ -29,6 +29,5 @@ Widget catAppBar(context) {
         onPressed: () {},
       ),
     ),
-
   );
 }

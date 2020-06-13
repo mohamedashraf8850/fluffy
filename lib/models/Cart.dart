@@ -5,23 +5,21 @@ class Cart extends ChangeNotifier {
   double _totalPrice = 0.0;
 
   void add(Item item) {
-     var index  = _items.indexWhere((note) => note.title.startsWith(item.title));
-     if (index != -1){
-       _items[index].count++;
-       _items[index].price = _items[index].price + item.priceView;
-     }else{
-       _items.add(item);
-     }
-     _totalPrice = _totalPrice+ item.priceView;
-     notifyListeners();
-     print(item.price);
-     print(_totalPrice);
-
-
+    var index = _items.indexWhere((note) => note.title.startsWith(item.title));
+    if (index != -1) {
+      _items[index].count++;
+      _items[index].price = _items[index].price + item.priceView;
+    } else {
+      _items.add(item);
+    }
+    _totalPrice = _totalPrice + item.priceView;
+    notifyListeners();
+    print(item.price);
+    print(_totalPrice);
   }
 
   void remove(Item item) {
-    var index  = _items.indexWhere((note) => note.title.startsWith(item.title));
+    var index = _items.indexWhere((note) => note.title.startsWith(item.title));
     _totalPrice -= item.price;
     item.price = item.priceView;
     item.count = item.countView;
@@ -30,9 +28,9 @@ class Cart extends ChangeNotifier {
   }
 
   void removeItem(Item item) {
-    var index  = _items.indexWhere((note) => note.title.startsWith(item.title));
+    var index = _items.indexWhere((note) => note.title.startsWith(item.title));
     print(index);
-    if (index != -1){
+    if (index != -1) {
       _totalPrice -= item.priceView;
       _items[index].count--;
       _items[index].price = _items[index].price - item.priceView;
@@ -52,5 +50,4 @@ class Cart extends ChangeNotifier {
   List<Item> get basketItems {
     return _items;
   }
-
 }

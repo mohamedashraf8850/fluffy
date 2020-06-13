@@ -14,7 +14,13 @@ class _EditCartPageState extends State<EditCartPage>
     return Consumer<Cart>(builder: (context, cart, child) {
       return Scaffold(
         body: cart.basketItems.length == 0
-            ? Center(child: Text('no items in your cart',style: TextStyle(color:FluffyColors.BrandColor,fontWeight: FontWeight.bold),))
+            ? Center(
+                child: Text(
+                'no items in your cart',
+                style: TextStyle(
+                    color: FluffyColors.BrandColor,
+                    fontWeight: FontWeight.bold),
+              ))
             : Container(
                 padding: const EdgeInsets.only(right: 8.0, left: 8.0),
                 color: Colors.white,
@@ -35,21 +41,20 @@ class _EditCartPageState extends State<EditCartPage>
                                 cart.basketItems.removeAt(index);
                               });
                             },
-
                             background: Container(
                                 color: Colors.red,
                                 child: Icon(
                                   Icons.delete,
                                   color: Colors.white,
                                 )),
-                            child: orderItem(true,
-                                context ,
+                            child: orderItem(true, context,
                                 index: index,
                                 img:
                                     'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                                 itemPrice:
                                     cart.basketItems[index].price.toString(),
-                                itemCount:  cart.basketItems[index].count.toString(),
+                                itemCount:
+                                    cart.basketItems[index].count.toString(),
                                 title: cart.basketItems[index].title),
                           );
                         },

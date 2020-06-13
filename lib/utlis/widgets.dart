@@ -33,7 +33,7 @@ Widget fluffyCart(BuildContext context) {
 }
 
 Widget orderItem(bool listCart, BuildContext context,
-    {img, title, qty, itemPrice, itemCount,index}) {
+    {img, title, qty, itemPrice, itemCount, index}) {
   return Consumer<Cart>(builder: (context, cart, child) {
     return Row(
       children: <Widget>[
@@ -55,8 +55,9 @@ Widget orderItem(bool listCart, BuildContext context,
                 title,
                 style: TextStyle(
                     fontSize: 17,
-                    color:
-                    listCart == false ? Colors.black : FluffyColors.BrandColor),
+                    color: listCart == false
+                        ? Colors.black
+                        : FluffyColors.BrandColor),
               ),
               listCart == true
                   ? Row(
@@ -65,7 +66,7 @@ Widget orderItem(bool listCart, BuildContext context,
                         Container(
                           child: Row(
                             children: <Widget>[
-                             itemCount != "1"
+                              itemCount != "1"
                                   ? SizedBox(
                                       width: 25,
                                       height: 25,
@@ -80,7 +81,8 @@ Widget orderItem(bool listCart, BuildContext context,
                                             size: 10,
                                           ),
                                           onPressed: () {
-                                            cart.removeItem(cart.basketItems[index]);
+                                            cart.removeItem(
+                                                cart.basketItems[index]);
                                           },
                                         ),
                                       ),

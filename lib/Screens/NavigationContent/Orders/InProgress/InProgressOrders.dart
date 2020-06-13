@@ -11,7 +11,7 @@ Widget myInProgressOrders(BuildContext context) {
         Row(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top:5.0),
+              padding: const EdgeInsets.only(top: 5.0),
               child: Text(
                 "Order's status: On your way",
                 style: TextStyle(
@@ -27,14 +27,11 @@ Widget myInProgressOrders(BuildContext context) {
           flex: 4,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return orderItem(
-                false,
-                  context,
+              return orderItem(false, context,
                   img:
                       'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                   itemPrice: '7.00',
                   qty: '4',
-
                   title: 'Rich Bake Shami Bread');
             },
             itemCount: 5,
@@ -64,10 +61,13 @@ Widget myInProgressOrders(BuildContext context) {
                       children: <Widget>[
                         Text(
                           '28.00',
-                          style: TextStyle(color: Colors.black, fontSize: 15,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left:2.0),
+                          padding: const EdgeInsets.only(left: 2.0),
                           child: Text(
                             'EGP',
                             style: TextStyle(color: Colors.black, fontSize: 12),
@@ -84,8 +84,8 @@ Widget myInProgressOrders(BuildContext context) {
                   GestureDetector(
                     child: Text(
                       'Cancel Order',
-                      style:
-                          TextStyle(color: FluffyColors.BrandColor, fontSize: 15),
+                      style: TextStyle(
+                          color: FluffyColors.BrandColor, fontSize: 15),
                     ),
                     onTap: null,
                   ),

@@ -10,15 +10,18 @@ class _MainCartPageState extends State<MainCartPage> {
   final _currentPageNotifier = ValueNotifier<int>(0);
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.easeOut;
-  var titles, values, subTitles, pageIndex,subTitlePosition;
+  var titles, values, subTitles, pageIndex, subTitlePosition;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: new PreferredSize(
         preferredSize: Size.fromHeight(100.0),
-        child: cartAppBar(context,title: titles, value: values, subTitle: subTitles,subTitlePosition: subTitlePosition),
+        child: cartAppBar(context,
+            title: titles,
+            value: values,
+            subTitle: subTitles,
+            subTitlePosition: subTitlePosition),
       ),
       body: SafeArea(
         child: _buildBody(),
@@ -42,6 +45,7 @@ class _MainCartPageState extends State<MainCartPage> {
     }
     super.initState();
   }
+
   _buildBody() {
     return Container(
       color: Colors.white,
@@ -66,7 +70,6 @@ class _MainCartPageState extends State<MainCartPage> {
                           values = 0.25;
                           subTitles = 'Here we go';
                           subTitlePosition = 50.0;
-
                         });
                       } else if (_currentPageNotifier.value == 1) {
                         setState(() {
@@ -74,7 +77,6 @@ class _MainCartPageState extends State<MainCartPage> {
                           values = 0.50;
                           subTitles = 'Here we go2';
                           subTitlePosition = 120.0;
-
                         });
                       } else if (_currentPageNotifier.value == 2) {
                         setState(() {
@@ -116,8 +118,7 @@ class _MainCartPageState extends State<MainCartPage> {
           ],
           scrollDirection: Axis.horizontal,
           controller: _pageController,
-          onPageChanged: onPageViewChange
-      ),
+          onPageChanged: onPageViewChange),
     );
   }
 
@@ -129,7 +130,6 @@ class _MainCartPageState extends State<MainCartPage> {
         values = 0.25;
         subTitles = 'Here we go';
         subTitlePosition = 50.0;
-
       });
     } else if (_currentPageNotifier.value == 1) {
       setState(() {
@@ -137,7 +137,6 @@ class _MainCartPageState extends State<MainCartPage> {
         values = 0.50;
         subTitles = 'Here we go2';
         subTitlePosition = 120.0;
-
       });
     } else if (_currentPageNotifier.value == 2) {
       setState(() {

@@ -1,10 +1,41 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
+
 final List<Item> Proitems = [
-  Item(title: 'Gourmet Bread Rol with Black Olives ', price: 2.00 , count: 1,id: '1' , countView: 1,priceView: 2.00),
-  Item(title: 'Gourmet Bread Rol with White Olives ', price: 3.00,count: 1,id: '2' , countView: 1,priceView: 3.00),
-  Item(title: 'Gourmet Bread Rol with Red Olives ', price: 4.00,count: 1,id: '3' , countView: 1,priceView: 4.00),
-  Item(title: 'Gourmet Bread Rol with yellow Olives ', price: 5.00,count: 1,id: '4' , countView: 1,priceView: 5.00),
-  Item(title: 'Gourmet Bread Rol with orange Olives ', price: 6.00,count: 1,id: '5' , countView: 1,priceView: 6.00),
+  Item(
+      title: 'Gourmet Bread Rol with Black Olives ',
+      price: 2.00,
+      count: 1,
+      id: '1',
+      countView: 1,
+      priceView: 2.00),
+  Item(
+      title: 'Gourmet Bread Rol with White Olives ',
+      price: 3.00,
+      count: 1,
+      id: '2',
+      countView: 1,
+      priceView: 3.00),
+  Item(
+      title: 'Gourmet Bread Rol with Red Olives ',
+      price: 4.00,
+      count: 1,
+      id: '3',
+      countView: 1,
+      priceView: 4.00),
+  Item(
+      title: 'Gourmet Bread Rol with yellow Olives ',
+      price: 5.00,
+      count: 1,
+      id: '4',
+      countView: 1,
+      priceView: 5.00),
+  Item(
+      title: 'Gourmet Bread Rol with orange Olives ',
+      price: 6.00,
+      count: 1,
+      id: '5',
+      countView: 1,
+      priceView: 6.00),
 ];
 Widget productItem({img, title, count, price, addToCart}) {
   return Card(
@@ -98,7 +129,7 @@ Widget productItem({img, title, count, price, addToCart}) {
 }
 
 Widget productList() {
-  return Consumer<Cart>(builder: (context, cart, child){
+  return Consumer<Cart>(builder: (context, cart, child) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -110,18 +141,18 @@ Widget productList() {
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return productItem(title: Proitems[index].title,
+            return productItem(
+                title: Proitems[index].title,
                 img:
                     'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                 count: Proitems[index].countView.toString(),
                 price: Proitems[index].priceView.toString(),
-            addToCart: () {
-              cart.add(Proitems[index]);
-            }
-            );
+                addToCart: () {
+                  cart.add(Proitems[index]);
+                });
           },
         ),
       ),
     );
-});
+  });
 }

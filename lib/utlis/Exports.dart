@@ -37,4 +37,3 @@ export 'package:fluffyclientside/Screens/NavigationContent/Cart/mainCart.dart';
 export 'package:provider/provider.dart';
 export 'package:fluffyclientside/models/Item.dart';
 export 'package:fluffyclientside/models/Cart.dart';
-

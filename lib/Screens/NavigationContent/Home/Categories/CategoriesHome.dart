@@ -45,7 +45,9 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
                     Text(
                       'Subscribe for our Special \nbraed collections',
                       style: TextStyle(
-                          color: FluffyColors.BrandColor, fontSize: 20,fontWeight: FontWeight.bold),
+                          color: FluffyColors.BrandColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     Expanded(child: adverCatPackage_Cate()),
@@ -70,7 +72,6 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
         body: TabBarView(
           controller: controller,
           children: tabs.map((Tab tab) {
-
             return productList();
           }).toList(),
         ),

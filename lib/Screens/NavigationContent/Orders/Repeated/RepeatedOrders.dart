@@ -67,9 +67,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                     flex: 4,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return orderItem(
-                          false,
-                            context,
+                        return orderItem(false, context,
                             img:
                                 'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
                             itemPrice: '7.00',
@@ -91,20 +89,22 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                           width: MediaQuery.of(context).size.width - 5,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom:16.0,top:8.0),
+                          padding:
+                              const EdgeInsets.only(bottom: 16.0, top: 8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
                                 'Repeated on',
-                                style:
-                                    TextStyle(color: Colors.black, fontSize: 15),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15),
                               ),
                               Text(
                                 'Sun, Mon, Tue',
                                 style: TextStyle(
-                                    color: FluffyColors.LabelColor,
-                                    fontSize: 15,),
+                                  color: FluffyColors.LabelColor,
+                                  fontSize: 15,
+                                ),
                               ),
                             ],
                           ),
@@ -115,7 +115,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                             Text(
                               'Total subscription',
                               style:
-                              TextStyle(color: Colors.black, fontSize: 15),
+                                  TextStyle(color: Colors.black, fontSize: 15),
                             ),
                             Row(
                               children: <Widget>[
