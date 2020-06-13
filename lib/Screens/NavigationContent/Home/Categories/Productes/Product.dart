@@ -141,15 +141,20 @@ Widget productList() {
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return productItem(
-                title: Proitems[index].title,
-                img:
-                    'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
-                count: Proitems[index].countView.toString(),
-                price: Proitems[index].priceView.toString(),
-                addToCart: () {
-                  cart.add(Proitems[index]);
-                });
+            return GestureDetector(
+              onTap: (){
+                ProductDetailDialog(context);
+              },
+              child: productItem(
+                  title: Proitems[index].title,
+                  img:
+                      'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
+                  count: Proitems[index].countView.toString(),
+                  price: Proitems[index].priceView.toString(),
+                  addToCart: () {
+                    cart.add(Proitems[index]);
+                  }),
+            );
           },
         ),
       ),

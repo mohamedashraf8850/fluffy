@@ -41,3 +41,4 @@ export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileAppBar
 export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileContent/AdressDetails/AddressdetailsProfile.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Profile/mainProfile.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileContent/EditPersonalInfromation/Personal_Info.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/Productes/ProductDetails.dart';

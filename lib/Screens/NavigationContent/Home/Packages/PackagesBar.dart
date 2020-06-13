@@ -33,7 +33,7 @@ Widget packageItem(txt, img, BuildContext context) {
   );
 }
 
-Widget catPackage() {
+Widget catPackage(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
@@ -51,10 +51,18 @@ Widget catPackage() {
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            Text(
-              'See all',
-              style: TextStyle(color: Colors.black, fontSize: 15),
-              textAlign: TextAlign.right,
+            GestureDetector(
+              child: Text(
+                'See all',
+                style: TextStyle(color: Colors.black, fontSize: 15),
+                textAlign: TextAlign.right,
+              ),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CatHome()),
+                );
+                },
             ),
           ],
         ),

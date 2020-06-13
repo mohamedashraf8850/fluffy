@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             homeSearch(context),
-            Expanded(child: catPackage()),
+            Expanded(child: catPackage(context)),
             catList(context),
           ],
         ),
