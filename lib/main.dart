@@ -15,8 +15,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.light(),
       home: IntroGuider(),
-      //   home:MainSplashScreen(),
-      // home:MainSplashScreen(),
     );
   }
 }

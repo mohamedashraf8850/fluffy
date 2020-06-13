@@ -124,7 +124,7 @@ Widget orderItem(bool listCart, BuildContext context,
                                 itemPrice,
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: cart == true
+                                    color: listCart == true
                                         ? Colors.black
                                         : FluffyColors.BrandColor,
                                     fontWeight: FontWeight.bold),
@@ -135,7 +135,7 @@ Widget orderItem(bool listCart, BuildContext context,
                                   'EGP',
                                   style: TextStyle(
                                       fontSize: 12,
-                                      color: cart == true
+                                      color: listCart == true
                                           ? Colors.black
                                           : FluffyColors.BrandColor,
                                       fontWeight: FontWeight.normal),
@@ -202,4 +202,34 @@ Widget orderItem(bool listCart, BuildContext context,
       ],
     );
   });
+}
+
+Widget fluffyTextField(BuildContext context,
+    {String hintText, controller, bool suffix}) {
+  return Container(
+    width: MediaQuery.of(context).size.width - 30,
+    child: Theme(
+      data: new ThemeData(
+        primaryColor: FluffyColors.BrandColor,
+        primaryColorDark: FluffyColors.BrandColor,
+      ),
+      child: TextField(
+        controller: controller,
+        style: TextStyle(fontSize: 15),
+        decoration: new InputDecoration(
+          border: new OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide: new BorderSide(
+                  color: FluffyColors.LocationColor.withOpacity(0.3))),
+          hintText: hintText,
+          hintStyle: TextStyle(fontSize: 15),
+          fillColor: FluffyColors.BrandColor,
+          hoverColor: FluffyColors.BrandColor,
+          focusColor: FluffyColors.BrandColor,
+          suffixText: suffix == true ? '+20' : null,
+          contentPadding: const EdgeInsets.only(left: 15.0),
+        ),
+      ),
+    ),
+  );
 }
