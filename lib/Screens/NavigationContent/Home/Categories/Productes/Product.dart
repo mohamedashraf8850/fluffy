@@ -143,7 +143,7 @@ Widget productList() {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: (){
-                ProductDetailDialog(context);
+                ProductDetailDialog(context,index:Proitems[index]);
               },
               child: productItem(
                   title: Proitems[index].title,
@@ -153,6 +153,11 @@ Widget productList() {
                   price: Proitems[index].priceView.toString(),
                   addToCart: () {
                     cart.add(Proitems[index]);
+                    Fluttertoast.showToast(
+                        msg: "${Proitems[index].title} is Added in Cart with ${Proitems[index].count} Items",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1);
                   }),
             );
           },
