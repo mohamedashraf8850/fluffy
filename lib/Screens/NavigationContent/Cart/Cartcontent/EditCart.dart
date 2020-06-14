@@ -7,7 +7,6 @@ class EditCartPage extends StatefulWidget {
 
 class _EditCartPageState extends State<EditCartPage>
     with TickerProviderStateMixin {
-  final items = List<String>.generate(20, (i) => "Item ${i + 1}");
 
   @override
   Widget build(BuildContext context) {
