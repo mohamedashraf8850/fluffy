@@ -8,6 +8,7 @@ class FluffyColors {
   static const NotSelectedColor = Color(0xFF9E9E9E);
   static const LabelColor = Color(0xFF707070);
   static const BGColor = Color(0xFFF7FAFD);
+  static const CardClick = Color(0xFFFFDD3A1);
 }
 
 Widget fluffyCart(BuildContext context) {

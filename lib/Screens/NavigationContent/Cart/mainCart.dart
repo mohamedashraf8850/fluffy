@@ -91,8 +91,8 @@ class MainCartPageState extends State<MainCartPage> {
           children: <Widget>[
             EditCartPage(),
             AddressDetailsPage(),
-            EditCartPage(),
-            AddressDetailsPage(),
+            PaymentPage(),
+            ThankYouPage(),
           ],
           scrollDirection: Axis.horizontal,
           controller: _pageController,
@@ -126,7 +126,7 @@ class MainCartPageState extends State<MainCartPage> {
         values = 0.75;
         subTitles = 'Final Step';
         subTitlePosition = 250.0;
-        btnTitle = 'Next step: Deliver';
+        btnTitle = 'Deliver';
 
       });}
     else if (_currentPageNotifier.value == 3) {

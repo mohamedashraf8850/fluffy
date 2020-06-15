@@ -44,3 +44,6 @@ export 'package:fluffyclientside/Screens/NavigationContent/Profile/ProfileConten
 export 'package:fluffyclientside/Screens/NavigationContent/Home/Categories/Productes/ProductDetails.dart';
 export 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 export 'package:fluffyclientside/Screens/NavigationContent/Cart/Cartcontent/AddressDetailsCart.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Cart/Cartcontent/PaymentCart.dart';
+export 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
+export 'package:fluffyclientside/Screens/NavigationContent/Cart/Cartcontent/ThankYouPage.dart';
