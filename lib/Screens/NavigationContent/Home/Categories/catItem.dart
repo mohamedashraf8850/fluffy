@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget catItem(txt, img) {
+Widget catItem(DocumentSnapshot doc) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -14,7 +14,7 @@ Widget catItem(txt, img) {
           child: GestureDetector(
             onTap: null,
             child: Image.network(
-              img,
+              '${doc.data['img']}',
               fit: BoxFit.fill,
               width: 170,
               height: 120,
@@ -25,7 +25,7 @@ Widget catItem(txt, img) {
       Padding(
         padding: const EdgeInsets.only(top: 5.0, left: 8.0),
         child: Text(
-          txt,
+          '${doc.data['name']}',
           style: TextStyle(fontSize: 13, color: Colors.black),
           textAlign: TextAlign.start,
         ),
@@ -37,26 +37,30 @@ Widget catItem(txt, img) {
 Widget catList(BuildContext context) {
   return Expanded(
     flex: 2,
-    child: GridView.builder(
-      itemCount: 5,
-      scrollDirection: Axis.vertical,
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CatHome()),
+    child: StreamBuilder<QuerySnapshot>(
+        stream: Connections.db.collection('Categories').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return GridView(
+              scrollDirection: Axis.vertical,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              shrinkWrap: true,
+              children: snapshot.data.documents.map((doc) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CatHome(index: doc.data['index'],productsId: doc.data['products'],len: snapshot.data.documents.length,)),
+                    );
+                  },
+                  child: catItem(doc),
+                );
+              }).toList(),
             );
-          },
-          child: catItem(
-            "Bread&Bakery $index",
-            'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
-          ),
-        );
-      },
-    ),
+          } else {
+            return SizedBox();
+          }
+        }),
   );
 }

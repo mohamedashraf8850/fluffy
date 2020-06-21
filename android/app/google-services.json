@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "284677891460",
+    "firebase_url": "https://fluffy-9df6d.firebaseio.com",
+    "project_id": "fluffy-9df6d",
+    "storage_bucket": "fluffy-9df6d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284677891460:android:07d6ed06f876ac8c29a9d1",
+        "android_client_info": {
+          "package_name": "com.fluffy.fluffyclientside"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284677891460-tvus0brlpd3qantvdd9aenoiq0nqvkan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMMI73XDhSMyG2vKv__wPBrQTHKRSriKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284677891460-tvus0brlpd3qantvdd9aenoiq0nqvkan.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "284677891460-824bk51p2i57bnm23ioeto0s8tedan9b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fluffy.fluffyclientside"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,17 +1,15 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
 class CatHome extends StatefulWidget {
+  final int index, len;
+  List productsId;
+
+  CatHome({Key key, this.index, this.productsId, this.len}) : super(key: key);
   @override
   _CatHomeState createState() => _CatHomeState();
 }
 
 class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
-  final List<Tab> tabs = <Tab>[
-    new Tab(text: "Bread"),
-    new Tab(text: "Vegetables"),
-    new Tab(text: "Fruits"),
-    new Tab(text: "Spices")
-  ];
 
   TabController controller;
   @override
@@ -23,7 +21,8 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = new TabController(length: 4, vsync: this);
+    controller = new TabController(
+        length: widget.len, vsync: this, initialIndex: widget.index);
   }
 
   @override
@@ -55,27 +54,45 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-              TabBar(
-                isScrollable: true,
-                unselectedLabelColor: Colors.black,
-                labelColor: FluffyColors.BrandColor,
-                indicatorColor: FluffyColors.BrandColor,
-                indicatorSize: TabBarIndicatorSize.tab,
-                onTap: (value) {
-                  print(value);
-                },
-                tabs: tabs,
-                controller: controller,
-              ),
+              StreamBuilder<QuerySnapshot>(
+                  stream: Connections.db.collection('Categories').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return TabBar(
+                        isScrollable: true,
+                        unselectedLabelColor: Colors.black,
+                        labelColor: FluffyColors.BrandColor,
+                        indicatorColor: FluffyColors.BrandColor,
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        onTap: (value) {
+                          print(value);
+                        },
+                        tabs: snapshot.data.documents
+                            .map((doc) => (Tab(text: doc.data['name'])))
+                            .toList(),
+                        controller: controller,
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  }),
             ],
           ),
         ),
-        body: TabBarView(
-          controller: controller,
-          children: tabs.map((Tab tab) {
-            return productList();
-          }).toList(),
-        ),
+        body: StreamBuilder<QuerySnapshot>(
+            stream: Connections.db.collection('Categories').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return TabBarView(
+                    controller: controller,
+                    children: snapshot.data.documents
+                        .map((doc) => (productList()))
+                        .toList()
+                );
+              } else {
+                return SizedBox();
+              }
+            }),
       ),
     );
   }
