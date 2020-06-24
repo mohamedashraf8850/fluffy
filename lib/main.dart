@@ -19,10 +19,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.light(),
       home: IntroGuider(),
-    // home: TestingDemoApp(),
+      // home: TestingDemoApp(),
     );
   }
 }
+
 class TestingDemoApp extends StatefulWidget {
   @override
   TestingDemoAppState createState() {
@@ -30,13 +31,11 @@ class TestingDemoApp extends StatefulWidget {
   }
 }
 
-
 class TestingDemoAppState extends State<TestingDemoApp> {
   String id;
   final db = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
   String name;
-
 
   Card buildItem(DocumentSnapshot doc) {
     return Card(
@@ -59,7 +58,8 @@ class TestingDemoAppState extends State<TestingDemoApp> {
               children: <Widget>[
                 FlatButton(
                   onPressed: () => updateData(doc),
-                  child: Text('Update todo', style: TextStyle(color: Colors.white)),
+                  child: Text('Update todo',
+                      style: TextStyle(color: Colors.white)),
                   color: Colors.green,
                 ),
                 SizedBox(width: 8),
@@ -124,7 +124,10 @@ class TestingDemoAppState extends State<TestingDemoApp> {
             stream: db.collection('CRUD').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Column(children: snapshot.data.documents.map((doc) => buildItem(doc)).toList());
+                return Column(
+                    children: snapshot.data.documents
+                        .map((doc) => buildItem(doc))
+                        .toList());
               } else {
                 return SizedBox();
               }
@@ -140,7 +143,9 @@ class TestingDemoAppState extends State<TestingDemoApp> {
 
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      DocumentReference ref = await db.collection('CRUD').add({'name': '$name 😎', 'todo': randomTodo()});
+      DocumentReference ref = await db
+          .collection('CRUD')
+          .add({'name': '$name 😎', 'todo': randomTodo()});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }
@@ -155,7 +160,10 @@ class TestingDemoAppState extends State<TestingDemoApp> {
   }
 
   void updateData(DocumentSnapshot doc) async {
-    await db.collection('CRUD').document(doc.documentID).updateData({'todo': 'please 🤫'});
+    await db
+        .collection('CRUD')
+        .document(doc.documentID)
+        .updateData({'todo': 'please 🤫'});
   }
 
   void deleteData(DocumentSnapshot doc) async {

@@ -47,11 +47,19 @@ Widget catList(BuildContext context) {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               shrinkWrap: true,
               children: snapshot.data.documents.map((doc) {
+                var listIndex =
+                    snapshot.data.documents.map((e) => e.data['name']);
+                var passIndex = listIndex.toList().indexOf(doc.data['name']);
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CatHome(index: doc.data['index'],productsId: doc.data['products'],len: snapshot.data.documents.length,)),
+                      MaterialPageRoute(
+                          builder: (context) => CatHome(
+                                index: passIndex,
+                                len: snapshot.data.documents.length,
+                              )),
                     );
                   },
                   child: catItem(doc),

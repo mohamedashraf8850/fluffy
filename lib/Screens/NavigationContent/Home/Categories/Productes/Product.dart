@@ -1,43 +1,7 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-final List<Item> Proitems = [
-  Item(
-      title: 'Gourmet Bread Rol with Black Olives ',
-      price: 2.00,
-      count: 1,
-      id: '1',
-      countView: 1,
-      priceView: 2.00),
-  Item(
-      title: 'Gourmet Bread Rol with White Olives ',
-      price: 3.00,
-      count: 1,
-      id: '2',
-      countView: 1,
-      priceView: 3.00),
-  Item(
-      title: 'Gourmet Bread Rol with Red Olives ',
-      price: 4.00,
-      count: 1,
-      id: '3',
-      countView: 1,
-      priceView: 4.00),
-  Item(
-      title: 'Gourmet Bread Rol with yellow Olives ',
-      price: 5.00,
-      count: 1,
-      id: '4',
-      countView: 1,
-      priceView: 5.00),
-  Item(
-      title: 'Gourmet Bread Rol with orange Olives ',
-      price: 6.00,
-      count: 1,
-      id: '5',
-      countView: 1,
-      priceView: 6.00),
-];
-Widget productItem({img, title, count, price, addToCart}) {
+Widget productItem({DocumentSnapshot doc, cart}) {
+  int count = 1;
   return Card(
     elevation: 0,
     shape: RoundedRectangleBorder(
@@ -55,7 +19,7 @@ Widget productItem({img, title, count, price, addToCart}) {
               flex: 2,
               child: Center(
                 child: Image.network(
-                  img,
+                  doc.data['img'],
                   fit: BoxFit.fill,
                 ),
               ),
@@ -63,7 +27,7 @@ Widget productItem({img, title, count, price, addToCart}) {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: Text(
-                title,
+                doc.data['name'],
                 style: TextStyle(
                   color: FluffyColors.TextColor,
                   fontSize: 10,
@@ -85,7 +49,7 @@ Widget productItem({img, title, count, price, addToCart}) {
                   ),
                   RichText(
                     text: TextSpan(
-                        text: price,
+                        text: '${doc.data['price']}',
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.black,
@@ -108,7 +72,22 @@ Widget productItem({img, title, count, price, addToCart}) {
                 height: 30,
                 width: 80,
                 child: RaisedButton(
-                  onPressed: addToCart,
+                  onPressed: () {
+                    print(doc.documentID);
+                    cart.add(Item(
+                        title: '${doc.data['name']}',
+                        price: doc.data['price'],
+                        count: 1,
+                        id: doc.documentID,
+                        image: '${doc.data['img']}',
+                        countView: 1,
+                        priceView: doc.data['price']));
+                    Fluttertoast.showToast(
+                        msg: "${doc.data['name']} is Added in Cart ",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1);
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: FluffyColors.BrandColor)),
@@ -128,41 +107,38 @@ Widget productItem({img, title, count, price, addToCart}) {
   );
 }
 
-Widget productList() {
+Widget productList({String docId}) {
   return Consumer<Cart>(builder: (context, cart, child) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        color: FluffyColors.BGColor,
-        child: GridView.builder(
-          itemCount: Proitems.length,
-          scrollDirection: Axis.vertical,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: (){
-                ProductDetailDialog(context,index:Proitems[index]);
-              },
-              child: productItem(
-                  title: Proitems[index].title,
-                  img:
-                      'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
-                  count: Proitems[index].countView.toString(),
-                  price: Proitems[index].priceView.toString(),
-                  addToCart: () {
-                    cart.add(Proitems[index]);
-                    Fluttertoast.showToast(
-                        msg: "${Proitems[index].title} is Added in Cart with ${Proitems[index].count} Items",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1);
-                  }),
+    return StreamBuilder<QuerySnapshot>(
+        stream: Connections.db.collection('Products').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                color: FluffyColors.BGColor,
+                child: GridView(
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  shrinkWrap: true,
+                  children: snapshot.data.documents
+                      .where((l) => l.data['type'] == docId)
+                      .toList()
+                      .map((doc) {
+                    return GestureDetector(
+                      onTap: () {
+                        ProductDetailDialog(context, index: doc);
+                      },
+                      child: productItem(cart: cart, doc: doc),
+                    );
+                  }).toList(),
+                ),
+              ),
             );
-          },
-        ),
-      ),
-    );
+          } else {
+            return SizedBox();
+          }
+        });
   });
 }

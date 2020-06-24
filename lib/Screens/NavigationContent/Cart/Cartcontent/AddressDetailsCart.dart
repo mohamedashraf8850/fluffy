@@ -106,21 +106,20 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  text:deTime != '' ? 'Your Order will Arrive in ' : '',
-                  style: TextStyle(
+                    text: deTime != '' ? 'Your Order will Arrive in ' : '',
+                    style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
-                      ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text:deTime != '' ?'$deTime' : '',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: FluffyColors.BrandColor,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ]
-                ),
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: deTime != '' ? '$deTime' : '',
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: FluffyColors.BrandColor,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ]),
               ),
             ),
             Padding(

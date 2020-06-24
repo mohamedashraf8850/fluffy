@@ -21,7 +21,6 @@ class _PaymentPageState extends State<PaymentPage>
   TextEditingController promoCodeController = new TextEditingController();
   void _onChangedRadio(bool value) => setState(() {
         swValue = value;
-
       });
 
   @override
@@ -148,108 +147,113 @@ class _PaymentPageState extends State<PaymentPage>
           ],
         ),
       ),
-      bottomSheet:swValue == true? SolidBottomSheet(
-        headerBar: Container(
-          height: 50,
-          child: Card(
-            color: Colors.white,
-            child: Center(
-                child: Text(
-              "Repeat order every",
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-            )),
-            elevation: 0,
-            shadowColor: FluffyColors.BrandColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0)),
-            ),
-          ),
-        ),
-        body: GridView.count(crossAxisCount: 3, children: <Widget>[
-          GestureDetector(
-            child: cardItem(title: 'Sun', boolType: sun),
-            onTap: () {
-              setState(() {
-                sun = !sun;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Mon', boolType: mon),
-            onTap: () {
-              setState(() {
-                mon = !mon;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Tue', boolType: tue),
-            onTap: () {
-              setState(() {
-                tue = !tue;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Wed', boolType: wed),
-            onTap: () {
-              setState(() {
-                wed = !wed;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Thu', boolType: thu),
-            onTap: () {
-              setState(() {
-                thu = !thu;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Fri', boolType: fri),
-            onTap: () {
-              setState(() {
-                fri = !fri;
-              });
-            },
-          ),
-          GestureDetector(
-            child: cardItem(title: 'Sat', boolType: sat),
-            onTap: () {
-              setState(() {
-                sat = !sat;
-              });
-            },
-          ),
-          GestureDetector(
-            child: Card(
-              child: Center(
-                child: Text(
-                  'All week',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: allWeek == false ? Colors.black : Colors.white),
-                  textAlign: TextAlign.center,
+      bottomSheet: swValue == true
+          ? SolidBottomSheet(
+              headerBar: Container(
+                height: 50,
+                child: Card(
+                  color: Colors.white,
+                  child: Center(
+                      child: Text(
+                    "Repeat order every",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  )),
+                  elevation: 0,
+                  shadowColor: FluffyColors.BrandColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0)),
+                  ),
                 ),
               ),
-              color: allWeek == true ? FluffyColors.BrandColor : Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-            ),
-            onTap: () {
-              setState(() {
-                allWeek = !allWeek;
-              });
-            },
-          ),
-        ]),
-        elevation: 8,
-      ): null,
+              body: GridView.count(crossAxisCount: 3, children: <Widget>[
+                GestureDetector(
+                  child: cardItem(title: 'Sun', boolType: sun),
+                  onTap: () {
+                    setState(() {
+                      sun = !sun;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Mon', boolType: mon),
+                  onTap: () {
+                    setState(() {
+                      mon = !mon;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Tue', boolType: tue),
+                  onTap: () {
+                    setState(() {
+                      tue = !tue;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Wed', boolType: wed),
+                  onTap: () {
+                    setState(() {
+                      wed = !wed;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Thu', boolType: thu),
+                  onTap: () {
+                    setState(() {
+                      thu = !thu;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Fri', boolType: fri),
+                  onTap: () {
+                    setState(() {
+                      fri = !fri;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: cardItem(title: 'Sat', boolType: sat),
+                  onTap: () {
+                    setState(() {
+                      sat = !sat;
+                    });
+                  },
+                ),
+                GestureDetector(
+                  child: Card(
+                    child: Center(
+                      child: Text(
+                        'All week',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color:
+                                allWeek == false ? Colors.black : Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    color: allWeek == true
+                        ? FluffyColors.BrandColor
+                        : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      allWeek = !allWeek;
+                    });
+                  },
+                ),
+              ]),
+              elevation: 8,
+            )
+          : null,
     );
   }
 

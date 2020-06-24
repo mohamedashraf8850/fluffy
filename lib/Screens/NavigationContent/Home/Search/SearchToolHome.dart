@@ -10,6 +10,7 @@ Widget homeSearch(BuildContext context) {
       ),
       child: TextField(
         style: TextStyle(fontSize: 15),
+        onChanged: (value) {},
         decoration: new InputDecoration(
           border: new OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),

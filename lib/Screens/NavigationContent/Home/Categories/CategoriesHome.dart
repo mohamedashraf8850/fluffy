@@ -2,16 +2,17 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 
 class CatHome extends StatefulWidget {
   final int index, len;
-  List productsId;
 
-  CatHome({Key key, this.index, this.productsId, this.len}) : super(key: key);
+  CatHome({Key key, this.index, this.len}) : super(key: key);
   @override
   _CatHomeState createState() => _CatHomeState();
 }
 
 class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
-
   TabController controller;
+  static String tabId;
+
+  Connections conn = new Connections();
   @override
   void dispose() {
     super.dispose();
@@ -21,6 +22,7 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     controller = new TabController(
         length: widget.len, vsync: this, initialIndex: widget.index);
   }
@@ -86,9 +88,8 @@ class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
                 return TabBarView(
                     controller: controller,
                     children: snapshot.data.documents
-                        .map((doc) => (productList()))
-                        .toList()
-                );
+                        .map((doc) => (productList(docId: doc.documentID)))
+                        .toList());
               } else {
                 return SizedBox();
               }

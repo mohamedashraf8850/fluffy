@@ -10,7 +10,7 @@ class MainCartPageState extends State<MainCartPage> {
   final _currentPageNotifier = ValueNotifier<int>(0);
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.easeOut;
-  var titles, values, subTitles, pageIndex, subTitlePosition,btnTitle;
+  var titles, values, subTitles, pageIndex, subTitlePosition, btnTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,8 @@ class MainCartPageState extends State<MainCartPage> {
                     print(_currentPageNotifier.value);
                     if (_currentPageNotifier.value <= 2) {
                       onPageViewChangeButton();
-                  }},
+                    }
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: FluffyColors.BrandColor)),
@@ -87,7 +88,7 @@ class MainCartPageState extends State<MainCartPage> {
     return Container(
       height: MediaQuery.of(context).size.height - 80,
       child: PageView(
-          physics:new NeverScrollableScrollPhysics(),
+          physics: new NeverScrollableScrollPhysics(),
           children: <Widget>[
             EditCartPage(),
             AddressDetailsPage(),
@@ -109,7 +110,6 @@ class MainCartPageState extends State<MainCartPage> {
         subTitles = 'Here we go';
         subTitlePosition = 50.0;
         btnTitle = 'Next step: Delivery information';
-
       });
     } else if (_currentPageNotifier.value == 1) {
       setState(() {
@@ -118,7 +118,6 @@ class MainCartPageState extends State<MainCartPage> {
         subTitles = 'Almost Done';
         subTitlePosition = 120.0;
         btnTitle = 'Next step: Payment';
-
       });
     } else if (_currentPageNotifier.value == 2) {
       setState(() {
@@ -127,9 +126,8 @@ class MainCartPageState extends State<MainCartPage> {
         subTitles = 'Final Step';
         subTitlePosition = 250.0;
         btnTitle = 'Deliver';
-
-      });}
-    else if (_currentPageNotifier.value == 3) {
+      });
+    } else if (_currentPageNotifier.value == 3) {
       setState(() {
         titles = 'Thank you !';
         values = 1.0;
@@ -140,7 +138,7 @@ class MainCartPageState extends State<MainCartPage> {
     }
   }
 
-  void onPageViewChangeButton(){
+  void onPageViewChangeButton() {
     if (_currentPageNotifier.value == 0) {
       setState(() {
         titles = 'Edit your Cart';
@@ -164,8 +162,8 @@ class MainCartPageState extends State<MainCartPage> {
         subTitles = 'Final Step';
         subTitlePosition = 250.0;
         btnTitle = 'Deliver';
-      });}
-    else if (_currentPageNotifier.value == 3) {
+      });
+    } else if (_currentPageNotifier.value == 3) {
       setState(() {
         titles = 'Thank you !';
         values = 1.0;
@@ -175,8 +173,6 @@ class MainCartPageState extends State<MainCartPage> {
       });
     }
     pageIndex = ++_currentPageNotifier.value;
-    _pageController.nextPage(
-        duration: _kDuration, curve: _kCurve);
-  
+    _pageController.nextPage(duration: _kDuration, curve: _kCurve);
   }
 }

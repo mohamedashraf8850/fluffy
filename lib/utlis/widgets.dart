@@ -213,7 +213,7 @@ Widget fluffyTextField(BuildContext context,
     TextInputType type,
     showSW,
     showPass,
-    hidePass ,
+    hidePass,
     Summit}) {
   return Container(
     width: MediaQuery.of(context).size.width - (size == null ? 30 : size),

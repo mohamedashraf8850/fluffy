@@ -7,7 +7,6 @@ class EditCartPage extends StatefulWidget {
 
 class _EditCartPageState extends State<EditCartPage>
     with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Cart>(builder: (context, cart, child) {
@@ -48,8 +47,7 @@ class _EditCartPageState extends State<EditCartPage>
                                 )),
                             child: orderItem(true, context,
                                 index: index,
-                                img:
-                                    'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
+                                img: cart.basketItems[index].image.toString(),
                                 itemPrice:
                                     cart.basketItems[index].price.toString(),
                                 itemCount:

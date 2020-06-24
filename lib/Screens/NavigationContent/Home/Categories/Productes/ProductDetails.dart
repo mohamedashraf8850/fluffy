@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget ProductDetailDialog(BuildContext context , {index}) {
+Widget ProductDetailDialog(BuildContext context, {DocumentSnapshot index}) {
   showDialog(
     context: context,
     // barrierDismissible: false,
@@ -10,7 +10,8 @@ Widget ProductDetailDialog(BuildContext context , {index}) {
           builder: (context, setState) {
             return Dialog(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),),
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
                 backgroundColor: Colors.white,
                 insetPadding: EdgeInsets.all(10),
                 child: Stack(
@@ -18,10 +19,7 @@ Widget ProductDetailDialog(BuildContext context , {index}) {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height - 400,
+                      height: MediaQuery.of(context).size.height - 400,
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
@@ -29,13 +27,12 @@ Widget ProductDetailDialog(BuildContext context , {index}) {
                               padding: const EdgeInsets.all(8.0),
                               child: ClipRRect(
                                 borderRadius: new BorderRadius.circular(18.0),
-                                child: Image.network(
-                                    'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
+                                child: Image.network('${index.data['img']}',
                                     fit: BoxFit.fill),
                               ),
                             ),
                             Text(
-                              index.title,
+                              '${index.data['name']}',
                               style: TextStyle(
                                   color: FluffyColors.BrandColor, fontSize: 15),
                             ),
@@ -44,10 +41,7 @@ Widget ProductDetailDialog(BuildContext context , {index}) {
                             ),
                             SingleChildScrollView(
                               child: Text(
-                                '''Lorem ipsum dolor sit amet, consectetur 
-  adipiscing elit, sed do eiusmod tempor 
-  incididunt ut labore et dolore magna aliqua.
-  Ut enim ad minim veniam, quis nostrud
+                                '''${index.data['desc']}
             ''',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -64,23 +58,30 @@ Widget ProductDetailDialog(BuildContext context , {index}) {
                         child: Center(
                           child: RaisedButton(
                             onPressed: () {
-                               cart.add(index);
-                               Fluttertoast.showToast(
-                                   msg: "${index.title} is Added in Cart with ${index.count} Items",
-                                   toastLength: Toast.LENGTH_SHORT,
-                                   gravity: ToastGravity.TOP,
-                                   timeInSecForIosWeb: 1);
+                              cart.add(Item(
+                                  title: '${index.data['name']}',
+                                  price: index.data['price'],
+                                  count: 1,
+                                  id: index.documentID,
+                                  image: '${index.data['img']}',
+                                  countView: 1,
+                                  priceView: index.data['price']));
+                              Fluttertoast.showToast(
+                                  msg: "${index.data['name']} is Added in Cart",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 1);
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: FluffyColors.BrandColor)),
+                                side:
+                                    BorderSide(color: FluffyColors.BrandColor)),
                             color: FluffyColors.BrandColor,
                             child: Text(
                               'ADD TO CART',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 12),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
                             ),
                           ),
                         ))

@@ -1,7 +1,7 @@
 class Item {
   String title, id, image;
   int countView, count;
-  double priceView, price;
+  num priceView, price;
   Item(
       {this.title,
       this.price,
