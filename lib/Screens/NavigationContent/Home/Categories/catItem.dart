@@ -34,41 +34,70 @@ Widget catItem(DocumentSnapshot doc) {
   );
 }
 
-Widget catList(BuildContext context) {
+Widget catList(BuildContext context, withSearch, {String textSearch}) {
   return Expanded(
     flex: 2,
     child: StreamBuilder<QuerySnapshot>(
         stream: Connections.db.collection('Categories').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return GridView(
-              scrollDirection: Axis.vertical,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              shrinkWrap: true,
-              children: snapshot.data.documents.map((doc) {
-                var listIndex =
-                    snapshot.data.documents.map((e) => e.data['name']);
-                var passIndex = listIndex.toList().indexOf(doc.data['name']);
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return new Text('Loading...');
+              default:
+                print(snapshot.data.documents.map((e) => e.data['name']));
+                return GridView(
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  shrinkWrap: true,
+                  children: withSearch == false
+                      ? snapshot.data.documents.map((doc) {
+                          var listIndex = snapshot.data.documents
+                              .map((e) => e.data['name']);
+                          var passIndex =
+                              listIndex.toList().indexOf(doc.data['name']);
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CatHome(
+                                          index: passIndex,
+                                          len: snapshot.data.documents.length,
+                                        )),
+                              );
+                            },
+                            child: catItem(doc),
+                          );
+                        }).toList()
+                      : snapshot.data.documents
+                          .where((l) => l.data['name'] == textSearch)
+                          .toList()
+                          .map((doc) {
+                          var listIndex = snapshot.data.documents
+                              .map((e) => e.data['name']);
+                          var passIndex =
+                              listIndex.toList().indexOf(doc.data['name']);
 
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CatHome(
-                                index: passIndex,
-                                len: snapshot.data.documents.length,
-                              )),
-                    );
-                  },
-                  child: catItem(doc),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CatHome(
+                                          index: passIndex,
+                                          len: snapshot.data.documents.length,
+                                        )),
+                              );
+                            },
+                            child: catItem(doc),
+                          );
+                        }).toList(),
                 );
-              }).toList(),
-            );
-          } else {
-            return SizedBox();
-          }
+            }
+          } else {}
+          return SizedBox();
         }),
   );
 }

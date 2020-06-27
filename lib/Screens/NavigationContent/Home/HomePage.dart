@@ -6,6 +6,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String name = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +18,50 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            homeSearch(context),
+            Container(
+              width: MediaQuery.of(context).size.width - 30,
+              child: Theme(
+                data: new ThemeData(
+                  primaryColor: FluffyColors.BrandColor,
+                  primaryColorDark: FluffyColors.BrandColor,
+                ),
+                child: TextField(
+                  style: TextStyle(fontSize: 15),
+                  onChanged: (val) => initiateSearch(val),
+                  decoration: new InputDecoration(
+                    border: new OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: new BorderSide(
+                            color:
+                                FluffyColors.LocationColor.withOpacity(0.3))),
+                    hintText: 'search your daily needs',
+                    hintStyle: TextStyle(fontSize: 15),
+                    fillColor: FluffyColors.BrandColor,
+                    hoverColor: FluffyColors.BrandColor,
+                    focusColor: FluffyColors.BrandColor,
+                    contentPadding: const EdgeInsets.only(left: 15.0),
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: FluffyColors.BrandColor.withOpacity(0.3),
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(child: catPackage(context)),
-            catList(context),
+            catList(context, name != "" && name != null ? true : false,
+                textSearch: name),
           ],
         ),
       ),
     );
+  }
+
+  void initiateSearch(String val) {
+    setState(() {
+      name = val.trim();
+    });
+    print(name);
   }
 }

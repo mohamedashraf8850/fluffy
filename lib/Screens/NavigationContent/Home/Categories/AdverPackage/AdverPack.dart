@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget adverPackageItem_Cate(txt, img, BuildContext context) {
+Widget adverPackageItem_Cate(DocumentSnapshot doc, BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -14,7 +14,7 @@ Widget adverPackageItem_Cate(txt, img, BuildContext context) {
           child: GestureDetector(
               child: Stack(children: <Widget>[
             Image.network(
-              img,
+              '${doc.data['img']}',
               fit: BoxFit.fitWidth,
               width: MediaQuery.of(context).size.width - 100,
               height: 150,
@@ -28,7 +28,7 @@ Widget adverPackageItem_Cate(txt, img, BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      txt,
+                      '${doc.data['name']}',
                       style: TextStyle(fontSize: 10, color: Colors.white),
                       textAlign: TextAlign.start,
                     ),
@@ -69,24 +69,33 @@ Widget adverPackageItem_Cate(txt, img, BuildContext context) {
 }
 
 Widget adverCatPackage_Cate() {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: 5,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return adverPackageItem_Cate(
-                  "Ramadan's FREE gifts",
-                  'https://www.proactiveinvestors.com/thumbs/upload/News/Image/2019_09/1200z740_1568815448_2019-09-18-10-04-08_063521780331bdf62825b7cc9d6332f8.jpg',
-                  context);
-            },
-          ),
-        ),
-      ),
-    ],
-  );
+  return StreamBuilder<QuerySnapshot>(
+      stream: Connections.db.collection('Packages').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: snapshot.data.documents.map((doc) {
+                      return GestureDetector(
+                        onTap: () {
+                          ProductDetailDialog(context, index: doc);
+                        },
+                        child: adverPackageItem_Cate(doc, context),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Container();
+        }
+      });
 }
