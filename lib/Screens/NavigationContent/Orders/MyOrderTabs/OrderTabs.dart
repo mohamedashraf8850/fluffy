@@ -4,7 +4,9 @@ class MyOrderTabs extends StatefulWidget {
   @override
   _MyOrderTabsState createState() => _MyOrderTabsState();
 }
-
+/*
+snapshot.data.documents.length
+ */
 class _MyOrderTabsState extends State<MyOrderTabs> {
   @override
   Widget build(BuildContext context) {
@@ -13,12 +15,27 @@ class _MyOrderTabsState extends State<MyOrderTabs> {
       initialIndex: 0,
       child: Scaffold(
         appBar: orderAppBar(context),
-        body: TabBarView(
-          children: [
-            myInProgressOrders(context),
-            MyRepeatedOrders(),
-            MyScheduledOrders(),
-          ],
+        body:StreamBuilder<QuerySnapshot>(
+            stream: Connections.db.collection('Orders').snapshots(),
+          builder: (context, snapshot) {
+              if(snapshot.hasData){
+
+                var inProgressLengh = snapshot.data.documents.where((l) => l.data['normal_status'] == true && l.data['uid'] == '123456').toList().length;
+                var myRepeatedLengh = snapshot.data.documents.where((l) => l.data['repeated_status'] == true && l.data['uid'] == '123456').toList().length;
+                var myScheduledLengh = snapshot.data.documents.where((l) => l.data['scheduled_status'] == true && l.data['uid'] == '123456').toList().length;
+
+                return TabBarView(
+                  children: [
+                    myInProgressOrders(),
+                    MyRepeatedOrders(),
+                    MyScheduledOrders(),
+                  ],
+                );
+              }else {
+                return SizedBox();
+              }
+
+          }
         ),
       ),
     );
