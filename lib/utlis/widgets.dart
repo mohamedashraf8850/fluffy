@@ -163,7 +163,7 @@ Widget orderItem(bool listCart, BuildContext context,
                                 width: 5,
                               ),
                               Text(
-                                qty,
+                                qty.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,
@@ -176,7 +176,7 @@ Widget orderItem(bool listCart, BuildContext context,
                           child: Row(
                             children: <Widget>[
                               Text(
-                                itemPrice,
+                                itemPrice.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: FluffyColors.BrandColor,
@@ -251,5 +251,33 @@ Widget fluffyTextField(BuildContext context,
         ),
       ),
     ),
+  );
+}
+
+asyncConfirmDialog(BuildContext context, {acceptFun}) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button for close dialog!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Reset settings?'),
+        content: const Text('Are you Sure to Cancel this Order? '),
+        actions: <Widget>[
+          FlatButton(
+            child: const Text('CANCEL'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: const Text('ACCEPT'),
+            onPressed: () {
+              acceptFun();
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      );
+    },
   );
 }
