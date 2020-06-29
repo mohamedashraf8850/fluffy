@@ -86,6 +86,8 @@ class TestingDemoAppState extends State<TestingDemoApp> {
       validator: (value) {
         if (value.isEmpty) {
           return 'Please enter some text';
+        }else {
+          return null;
         }
       },
       onSaved: (value) => name = value,

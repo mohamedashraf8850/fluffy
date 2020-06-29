@@ -126,6 +126,9 @@ class _PaymentPageState extends State<PaymentPage>
                   padding: const EdgeInsets.all(8.0),
                   child: fluffyTextField(
                     context,
+                    onSaved:(value){
+                      print(value);
+                    },
                     controller: promoCodeController,
                     hintText: 'Your Promo Code',
                     size: 60,

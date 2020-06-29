@@ -59,26 +59,28 @@ class MainCartPageState extends State<MainCartPage> {
               left: true,
               top: true,
               minimum: const EdgeInsets.only(left: 30.0, right: 16.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: RaisedButton(
-                  onPressed: () {
-                    print(_currentPageNotifier.value);
-                    if (_currentPageNotifier.value <= 2) {
-                      onPageViewChangeButton();
-                    }
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: FluffyColors.BrandColor)),
-                  color: FluffyColors.BrandColor,
-                  child: Text(
-                    btnTitle,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+              child: Consumer<Cart>(builder: (context, cart, child) {
+                return cart.basketItems.length != 0 ? Container(
+                  width: MediaQuery.of(context).size.width - 50,
+                  child: RaisedButton(
+                    onPressed: () {
+                      print(_currentPageNotifier.value);
+                      if (_currentPageNotifier.value <= 2) {
+                        onPageViewChangeButton();
+                      }
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: FluffyColors.BrandColor)),
+                    color: FluffyColors.BrandColor,
+                    child: Text(
+                      btnTitle,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
                   ),
-                ),
-              ))
+                ): Container();
+              }))
         ],
       ),
     );
