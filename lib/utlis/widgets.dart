@@ -214,6 +214,7 @@ Widget fluffyTextField(BuildContext context,
     showSW,
     showPass,
     hidePass,
+      validate,
       onSaved}) {
   return Container(
     width: MediaQuery.of(context).size.width - (size == null ? 30 : size),
@@ -224,6 +225,7 @@ Widget fluffyTextField(BuildContext context,
       ),
       child: TextFormField(
         controller: controller,
+        validator:validate ,
         onFieldSubmitted:onSaved,
         style: TextStyle(fontSize: 15),
         keyboardType: type == null ? TextInputType.text : type,

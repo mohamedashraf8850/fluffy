@@ -7,9 +7,23 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage>
     with TickerProviderStateMixin {
-  String choice, _radioValue;
-  bool swValue = false;
-  bool sun = false,
+  String choice,
+      daysText,
+      _radioValue,
+      sunText,
+      monText,
+      tueText,
+      wedText,
+      thuText,
+      friText,
+      satText,
+      allWeekText,
+      disFinder;
+  int promoDiscount;
+
+  bool swValue = false,
+      showRepeatedOrder = false,
+      sun = false,
       mon = false,
       tue = false,
       wed = false,
@@ -18,16 +32,26 @@ class _PaymentPageState extends State<PaymentPage>
       sat = false,
       allWeek = true;
 
+  final promoCodeKey = GlobalKey<FormState>();
+
   TextEditingController promoCodeController = new TextEditingController();
   void _onChangedRadio(bool value) => setState(() {
         swValue = value;
+        if (swValue == true) {
+          showRepeatedOrder = true;
+        } else {
+          showRepeatedOrder = false;
+        }
       });
 
   @override
   void initState() {
     setState(() {
       _radioValue = "Cash on delivery";
+      allWeekText = allWeek == true ? 'All Week' : '';
+      daysText = '$allWeekText';
     });
+    print(daysText);
     super.initState();
   }
 
@@ -124,15 +148,70 @@ class _PaymentPageState extends State<PaymentPage>
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: fluffyTextField(
-                    context,
-                    onSaved:(value){
-                      print(value);
-                    },
-                    controller: promoCodeController,
-                    hintText: 'Your Promo Code',
-                    size: 60,
-                  ),
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream:
+                          Connections.db.collection('PromoCodes').snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Form(
+                            key: promoCodeKey,
+                            child: fluffyTextField(
+                              context,
+                              validate: (value) {
+                                if (value.isEmpty) {
+                                  return 'Please enter some text';
+                                } else if (value == ' ') {
+                                  return 'Please enter some text';
+                                }
+                                return null;
+                              },
+                              onSaved: (String value) {
+                                if (promoCodeKey.currentState.validate()) {
+                                  disFinder = snapshot.data.documents
+                                      .where((l) => l.data['code'] == value)
+                                      .map((doc) =>
+                                          disFinder = doc.data['discount'])
+                                      .toString()
+                                      .replaceAll(')', '')
+                                      .toString()
+                                      .replaceAll('(', '');
+                                  if (disFinder == '()') {
+                                    Fluttertoast.showToast(
+                                        msg: "This Code are not founded",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.TOP,
+                                        textColor: Colors.white,
+                                        backgroundColor: Colors.red,
+                                        timeInSecForIosWeb: 1);
+                                  } else {
+                                    setState(() {
+                                      promoDiscount = int.parse(disFinder);
+                                    });
+                                    print(promoDiscount);
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Congratulations, you've got a discount $disFinder% for your Cart",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.TOP,
+                                        textColor: Colors.white,
+                                        backgroundColor:
+                                            FluffyColors.BrandColor,
+                                        timeInSecForIosWeb: 1);
+                                  }
+                                }
+                              },
+                              controller: promoCodeController,
+                              hintText: 'Your Promo Code',
+                              size: 60,
+                            ),
+                          );
+                        } else {
+                          return Container(
+                              child: Center(
+                                  child: Text(
+                                      'we are Sorry for that , but No Promo Codes are Available now.')));
+                        }
+                      }),
                 ),
               ],
             ),
@@ -146,7 +225,32 @@ class _PaymentPageState extends State<PaymentPage>
               title: new Text('Repeat order',
                   style: new TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black)),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      text: showRepeatedOrder == true
+                          ? 'Your Order will Repeated on '
+                          : '',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: showRepeatedOrder == true ? daysText : '',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: FluffyColors.BrandColor,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ]),
+                ))
           ],
         ),
       ),
@@ -176,6 +280,18 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       sun = !sun;
+                      allWeek = false;
+                      if (daysText.contains('Sun') == true) {
+                        print(daysText.contains(' Sun'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Sun', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Sun';
+                        });
+                      }
                     });
                   },
                 ),
@@ -184,6 +300,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       mon = !mon;
+                      allWeek = false;
+
+                      if (daysText.contains('Mon') == true) {
+                        print(daysText.contains(' Mon'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Mon', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Mon';
+                        });
+                      }
                     });
                   },
                 ),
@@ -192,6 +321,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       tue = !tue;
+                      allWeek = false;
+
+                      if (daysText.contains('Tue') == true) {
+                        print(daysText.contains(' Tue'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Tue', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Tue';
+                        });
+                      }
                     });
                   },
                 ),
@@ -200,6 +342,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       wed = !wed;
+                      allWeek = false;
+
+                      if (daysText.contains('Wed') == true) {
+                        print(daysText.contains(' Wed'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Wed', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Wed';
+                        });
+                      }
                     });
                   },
                 ),
@@ -208,6 +363,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       thu = !thu;
+                      allWeek = false;
+
+                      if (daysText.contains('Thu') == true) {
+                        print(daysText.contains(' Sun'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Thu', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Thu';
+                        });
+                      }
                     });
                   },
                 ),
@@ -216,6 +384,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       fri = !fri;
+                      allWeek = false;
+
+                      if (daysText.contains('Fri') == true) {
+                        print(daysText.contains(' Fri'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Fri', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Fri';
+                        });
+                      }
                     });
                   },
                 ),
@@ -224,6 +405,19 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       sat = !sat;
+                      allWeek = false;
+
+                      if (daysText.contains('Sat') == true) {
+                        print(daysText.contains(' Sat'));
+                        setState(() {
+                          daysText = daysText.replaceAll(' Sat', '');
+                        });
+                      } else {
+                        setState(() {
+                          allWeekMethod();
+                          daysText = daysText + ' Sat';
+                        });
+                      }
                     });
                   },
                 ),
@@ -250,6 +444,15 @@ class _PaymentPageState extends State<PaymentPage>
                   onTap: () {
                     setState(() {
                       allWeek = !allWeek;
+                      sun = false;
+                      mon = false;
+                      tue = false;
+                      wed = false;
+                      thu = false;
+                      fri = false;
+                      sat = false;
+                      daysText  = 'All Week';
+
                     });
                   },
                 ),
@@ -275,5 +478,13 @@ class _PaymentPageState extends State<PaymentPage>
         borderRadius: BorderRadius.circular(15.0),
       ),
     );
+  }
+
+  void allWeekMethod(){
+    if (daysText.contains('All Week') == true) {
+      setState(() {
+         daysText = daysText.replaceAll('All Week', '');
+      });
+    }
   }
 }
