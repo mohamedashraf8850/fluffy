@@ -8,11 +8,11 @@ class FourthLocationSplashScreen extends StatefulWidget {
 
 class _FourthLocationSplashScreenState
     extends State<FourthLocationSplashScreen> {
-  Position position;
-  getLocation() async {
-    position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  }
+//  Position position;
+//  getLocation() async {
+//    position = await Geolocator()
+//        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,22 +74,19 @@ class _FourthLocationSplashScreenState
               width: MediaQuery.of(context).size.width - 15,
               child: RaisedButton(
                 onPressed: () {
-                  if (position.longitude == null || position.latitude == null) {
-                    Fluttertoast.showToast(
-                      msg: "Please Turn on your GPS or Location Sensor",
-                      toastLength: Toast.LENGTH_SHORT,
-                      textColor: Colors.white,
-                      backgroundColor: Colors.red.withOpacity(0.3),
-                      gravity: ToastGravity.CENTER,
-                    );
-                  } else {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => BasicScaffold()),
-                        (Route<dynamic> route) => false);
-                    print(position.latitude.toString());
-                    print(position.longitude.toString());
-                  }
+//                  if (position.longitude == null || position.latitude == null) {
+//                    Fluttertoast.showToast(
+//                      msg: "Please Turn on your GPS or Location Sensor",
+//                      toastLength: Toast.LENGTH_SHORT,
+//                      textColor: Colors.white,
+//                      backgroundColor: Colors.red.withOpacity(0.3),
+//                      gravity: ToastGravity.CENTER,
+//                    );
+//                  } else {
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BasicScaffold()), (Route<dynamic> route) => false);
+//                    print(position.latitude.toString());
+//                    print(position.longitude.toString());
+//                  }
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0.0),
@@ -111,7 +108,7 @@ class _FourthLocationSplashScreenState
 
   @override
   void initState() {
-    getLocation();
+  //  getLocation();
     super.initState();
   }
 }

@@ -95,7 +95,8 @@ class MainCartPageState extends State<MainCartPage> {
             EditCartPage(),
             AddressDetailsPage(),
             PaymentPage(),
-            ThankYouPage(),
+      Container(child:Center(child: Text('Create Order not Finished Yet....')))
+//            ThankYouPage(),
           ],
           scrollDirection: Axis.horizontal,
           controller: _pageController,
