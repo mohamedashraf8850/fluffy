@@ -35,6 +35,8 @@ class _PaymentPageState extends State<PaymentPage>
   final promoCodeKey = GlobalKey<FormState>();
 
   TextEditingController promoCodeController = new TextEditingController();
+  TextEditingController cardNumController = new TextEditingController();
+  TextEditingController cardDateController = new TextEditingController();
   void _onChangedRadio(bool value) => setState(() {
         swValue = value;
         if (swValue == true) {
@@ -64,6 +66,143 @@ class _PaymentPageState extends State<PaymentPage>
           break;
         case 'Credit card':
           choice = value;
+          showDialog<String>(
+              context: context,
+              barrierDismissible:
+                  false, // dialog is dismissible with a tap on the barrier
+              builder: (BuildContext context) {
+                return Consumer<Cart>(builder: (context, cart, child)
+                {
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          insetPadding: EdgeInsets.all(10),
+                          child: Container(
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height - 400,
+                            child: AlertDialog(
+                              title: Text('Enter your Card Data'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              backgroundColor: Colors.white,
+                              insetPadding: EdgeInsets.all(10),
+                              content: Column(
+                                children: <Widget>[
+                                  new Row(
+                                    children: <Widget>[
+                                      new Expanded(
+                                          child: new TextField(
+                                            autofocus: true,
+                                            inputFormatters: [
+                                              MaskedTextInputFormatter(
+                                                mask: 'xxxx-xxxx-xxxx-xxxx',
+                                                separator: '-',
+                                              ),
+                                            ],
+                                            decoration: new InputDecoration(
+                                              labelText: 'Card Number',
+                                              fillColor: FluffyColors
+                                                  .BrandColor,
+                                              focusColor: FluffyColors
+                                                  .BrandColor,
+                                              hintText: 'ex. 4242259234928432',
+                                              suffix: Icon(
+                                                Icons.credit_card,
+                                                color: FluffyColors.BrandColor,
+                                              ),
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                            controller: cardNumController,
+                                          ))
+                                    ],
+                                  ),
+                                  new Row(
+                                    children: <Widget>[
+                                      new Expanded(
+                                          child: new TextField(
+                                            autofocus: true,
+                                            keyboardType: TextInputType
+                                                .datetime,
+                                            inputFormatters: [
+                                              MaskedTextInputFormatter(
+                                                mask: 'MM/YYYY',
+                                                separator: '/',
+                                              ),
+                                            ],
+                                            decoration: new InputDecoration(
+                                                suffix: Icon(
+                                                  Icons.date_range,
+                                                  color: FluffyColors
+                                                      .BrandColor,
+                                                ),
+                                                labelText:
+                                                'Expiry Month and Expiry Year',
+                                                hintText: 'ex. 12/2020'),
+                                            controller: cardDateController,
+                                          ))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                RaisedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: FluffyColors.BrandColor)),
+                                  color: FluffyColors.BrandColor,
+                                  child: Text(
+                                    'Cancel',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
+                                RaisedButton(
+                                  onPressed: () {
+                                    PaymentCard card = new PaymentCard(
+                                        number: cardNumController.text.replaceAll('-', ''),
+                                        expiry_month: cardDateController.text
+                                            .split('/')[0],
+                                        expiry_year: cardDateController.text
+                                            .split('/')[1]
+                                    );
+                                    CheckOut payment = CheckOut();
+                                    int amount = (cart.totalPrice * 100).toInt();
+                                    payment.makepayment(card,amount);
+                                    print(amount);
+                                    Navigator.of(context).pop();
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: FluffyColors.BrandColor)),
+                                  color: FluffyColors.BrandColor,
+                                  child: Text(
+                                    'Deliver',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                      );
+                    },
+                  );
+                });
+              });
           break;
         default:
           choice = null;
@@ -451,8 +590,7 @@ class _PaymentPageState extends State<PaymentPage>
                       thu = false;
                       fri = false;
                       sat = false;
-                      daysText  = 'All Week';
-
+                      daysText = 'All Week';
                     });
                   },
                 ),
@@ -480,10 +618,10 @@ class _PaymentPageState extends State<PaymentPage>
     );
   }
 
-  void allWeekMethod(){
+  void allWeekMethod() {
     if (daysText.contains('All Week') == true) {
       setState(() {
-         daysText = daysText.replaceAll('All Week', '');
+        daysText = daysText.replaceAll('All Week', '');
       });
     }
   }
