@@ -10,7 +10,6 @@ class CatHome extends StatefulWidget {
 
 class _CatHomeState extends State<CatHome> with TickerProviderStateMixin {
   TabController controller;
-  static String tabId;
 
   Connections conn = new Connections();
   @override

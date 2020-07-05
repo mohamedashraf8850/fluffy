@@ -9,7 +9,11 @@ class _BasicScaffoldState extends State<BasicScaffold> {
   int _selectedIndex = 0;
 
   //static List pages = [HomePage(), MyOrderTabs(), MainProfilePage()];
-  static List pages = [HomePage(), MyOrderTabs(), Container(child:Center(child: Text('not Finished Yet....')))];
+  static List pages = [
+    HomePage(),
+    MyOrderTabs(),
+    Container(child: Center(child: Text('not Finished Yet....')))
+  ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -46,8 +50,8 @@ class _BasicScaffoldState extends State<BasicScaffold> {
               'assets/ProfileIcon.png',
               width: 15,
               height: 15,
-           //   color: _selectedIndex == 2 ? FluffyColors.BrandColor : null,
-              color:  null,
+              //   color: _selectedIndex == 2 ? FluffyColors.BrandColor : null,
+              color: null,
             ),
             title: Text('Profile'),
           ),

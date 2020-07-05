@@ -20,7 +20,7 @@ Widget orderAppBar(BuildContext context) {
       ],
     ),
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+      icon: Icon(Icons.history, color: Colors.black, size: 20),
     ),
     bottom: TabBar(
       labelColor: FluffyColors.BrandColor,

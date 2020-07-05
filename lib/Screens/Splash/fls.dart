@@ -83,7 +83,9 @@ class _FourthLocationSplashScreenState
 //                      gravity: ToastGravity.CENTER,
 //                    );
 //                  } else {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => BasicScaffold()), (Route<dynamic> route) => false);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => BasicScaffold()),
+                      (Route<dynamic> route) => false);
 //                    print(position.latitude.toString());
 //                    print(position.longitude.toString());
 //                  }
@@ -108,7 +110,7 @@ class _FourthLocationSplashScreenState
 
   @override
   void initState() {
-  //  getLocation();
+    //  getLocation();
     super.initState();
   }
 }

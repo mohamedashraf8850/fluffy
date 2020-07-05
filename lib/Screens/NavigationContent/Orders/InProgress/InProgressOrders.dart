@@ -66,7 +66,7 @@ class _MyInProgressOrdersState extends State<MyInProgressOrders>
                 ),
         ),
         body: widget.len == 0 || widget.len == null
-            ? Container(color: Colors.white)
+            ? Container(color: Colors.white,child:Center(child: Text('No orders yet')))
             : StreamBuilder<QuerySnapshot>(
                 stream: Connections.db.collection('Orders').snapshots(),
                 builder: (context, snapshot) {

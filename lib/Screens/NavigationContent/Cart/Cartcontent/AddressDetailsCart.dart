@@ -9,7 +9,7 @@ class AddressDetailsPage extends StatefulWidget {
 class _AddressDetailsPageState extends State<AddressDetailsPage>
     with TickerProviderStateMixin {
   String radioValue = 'one';
-  String choice, deTime = '', address ='13, District 15';
+  String choice, scheduledDateTime = '', address = '13, District 15';
   TextEditingController phoneController = new TextEditingController();
   @override
   void initState() {
@@ -74,7 +74,8 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                         String newAddress;
                         return showDialog<String>(
                           context: context,
-                          barrierDismissible: false, // dialog is dismissible with a tap on the barrier
+                          barrierDismissible:
+                              false, // dialog is dismissible with a tap on the barrier
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Enter new address'),
@@ -82,15 +83,16 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                                 children: <Widget>[
                                   new Expanded(
                                       child: new TextField(
-                                        autofocus: true,
-                                        decoration: new InputDecoration(
-                                            labelText: 'new Address', hintText: 'ex. 13 District 15'),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            newAddress = value;
-                                          });
-                                        },
-                                      ))
+                                    autofocus: true,
+                                    decoration: new InputDecoration(
+                                        labelText: 'new Address',
+                                        hintText: 'ex. 13 District 15'),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        newAddress = value;
+                                      });
+                                    },
+                                  ))
                                 ],
                               ),
                               actions: <Widget>[
@@ -103,18 +105,17 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                                 FlatButton(
                                   child: Text('Ok'),
                                   onPressed: () {
-                                    if(newAddress != null){
+                                    if (newAddress != null) {
                                       print(newAddress);
                                       setState(() {
                                         address = newAddress;
                                       });
-                                    }else{
+                                    } else {
                                       print('Empty');
                                     }
                                     Navigator.of(context).pop();
                                   },
                                 ),
-
                               ],
                             );
                           },
@@ -144,11 +145,11 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                       minTime: DateTime.now(),
                       maxTime: DateTime(2025, 12, 12), onConfirm: (date) {
                     setState(() {
-                      deTime = DateFormat('yyyy-MM-dd – kk:mm').format(date) + ' Cairo(CAT)';
-                      print(deTime);
+                      scheduledDateTime = DateFormat('yyyy-MM-dd – kk:mm').format(date) +
+                          ' Cairo(CAT)';
+                      print(scheduledDateTime);
                     });
-                  },
-                      currentTime: DateTime.now(), locale: LocaleType.ar);
+                  }, currentTime: DateTime.now(), locale: LocaleType.ar);
                 },
               ),
             ),
@@ -157,14 +158,14 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: deTime != '' ? 'Your Order will Arrive in ' : '',
+                    text: scheduledDateTime != '' ? 'Your Order will Arrive in ' : '',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: deTime != '' ? '$deTime' : '',
+                        text: scheduledDateTime != '' ? '$scheduledDateTime' : '',
                         style: TextStyle(
                             fontSize: 25,
                             color: FluffyColors.BrandColor,

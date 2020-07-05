@@ -7,17 +7,6 @@ Widget catAppBar(context) {
     backgroundColor: Colors.white,
     actions: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(right: 5.0, top: 5.0),
-        child: IconButton(
-          icon: Icon(
-            Icons.search,
-            color: FluffyColors.BrandColor,
-            size: 20,
-          ),
-          onPressed: () {},
-        ),
-      ),
-      Padding(
         padding: const EdgeInsets.only(right: 20.0, top: 5.0),
         child: fluffyCart(context),
       ),

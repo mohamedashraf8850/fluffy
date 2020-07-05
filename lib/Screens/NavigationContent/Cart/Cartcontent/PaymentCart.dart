@@ -7,6 +7,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage>
     with TickerProviderStateMixin {
+
   String choice,
       daysText,
       _radioValue,
@@ -18,7 +19,9 @@ class _PaymentPageState extends State<PaymentPage>
       friText,
       satText,
       allWeekText,
-      disFinder;
+      disFinder,
+    paymentWay;
+
   int promoDiscount;
 
   bool swValue = false,
@@ -37,6 +40,7 @@ class _PaymentPageState extends State<PaymentPage>
   TextEditingController promoCodeController = new TextEditingController();
   TextEditingController cardNumController = new TextEditingController();
   TextEditingController cardDateController = new TextEditingController();
+
   void _onChangedRadio(bool value) => setState(() {
         swValue = value;
         if (swValue == true) {
@@ -63,16 +67,17 @@ class _PaymentPageState extends State<PaymentPage>
       switch (value) {
         case 'Cash on delivery':
           choice = value;
+          paymentWay = 'Cash on delivery';
           break;
         case 'Credit card':
           choice = value;
+          paymentWay = 'Credit card';
           showDialog<String>(
               context: context,
               barrierDismissible:
                   false, // dialog is dismissible with a tap on the barrier
               builder: (BuildContext context) {
-                return Consumer<Cart>(builder: (context, cart, child)
-                {
+                return Consumer<Cart>(builder: (context, cart, child) {
                   return StatefulBuilder(
                     builder: (context, setState) {
                       return Dialog(
@@ -82,10 +87,7 @@ class _PaymentPageState extends State<PaymentPage>
                           backgroundColor: Colors.transparent,
                           insetPadding: EdgeInsets.all(10),
                           child: Container(
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height - 400,
+                            height: MediaQuery.of(context).size.height - 400,
                             child: AlertDialog(
                               title: Text('Enter your Card Data'),
                               shape: RoundedRectangleBorder(
@@ -99,54 +101,50 @@ class _PaymentPageState extends State<PaymentPage>
                                     children: <Widget>[
                                       new Expanded(
                                           child: new TextField(
-                                            autofocus: true,
-                                            inputFormatters: [
-                                              MaskedTextInputFormatter(
-                                                mask: 'xxxx-xxxx-xxxx-xxxx',
-                                                separator: '-',
-                                              ),
-                                            ],
-                                            decoration: new InputDecoration(
-                                              labelText: 'Card Number',
-                                              fillColor: FluffyColors
-                                                  .BrandColor,
-                                              focusColor: FluffyColors
-                                                  .BrandColor,
-                                              hintText: 'ex. 4242259234928432',
-                                              suffix: Icon(
-                                                Icons.credit_card,
-                                                color: FluffyColors.BrandColor,
-                                              ),
-                                            ),
-                                            keyboardType: TextInputType.number,
-                                            controller: cardNumController,
-                                          ))
+                                        autofocus: true,
+                                        inputFormatters: [
+                                          MaskedTextInputFormatter(
+                                            mask: 'xxxx-xxxx-xxxx-xxxx',
+                                            separator: '-',
+                                          ),
+                                        ],
+                                        decoration: new InputDecoration(
+                                          labelText: 'Card Number',
+                                          fillColor: FluffyColors.BrandColor,
+                                          focusColor: FluffyColors.BrandColor,
+                                          hintText: 'ex. 4242259234928432',
+                                          suffix: Icon(
+                                            Icons.credit_card,
+                                            color: FluffyColors.BrandColor,
+                                          ),
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        controller: cardNumController,
+                                      ))
                                     ],
                                   ),
                                   new Row(
                                     children: <Widget>[
                                       new Expanded(
                                           child: new TextField(
-                                            autofocus: true,
-                                            keyboardType: TextInputType
-                                                .datetime,
-                                            inputFormatters: [
-                                              MaskedTextInputFormatter(
-                                                mask: 'MM/YYYY',
-                                                separator: '/',
-                                              ),
-                                            ],
-                                            decoration: new InputDecoration(
-                                                suffix: Icon(
-                                                  Icons.date_range,
-                                                  color: FluffyColors
-                                                      .BrandColor,
-                                                ),
-                                                labelText:
+                                        autofocus: true,
+                                        keyboardType: TextInputType.datetime,
+                                        inputFormatters: [
+                                          MaskedTextInputFormatter(
+                                            mask: 'MM/YYYY',
+                                            separator: '/',
+                                          ),
+                                        ],
+                                        decoration: new InputDecoration(
+                                            suffix: Icon(
+                                              Icons.date_range,
+                                              color: FluffyColors.BrandColor,
+                                            ),
+                                            labelText:
                                                 'Expiry Month and Expiry Year',
-                                                hintText: 'ex. 12/2020'),
-                                            controller: cardDateController,
-                                          ))
+                                            hintText: 'ex. 12/2020'),
+                                        controller: cardDateController,
+                                      ))
                                     ],
                                   ),
                                 ],
@@ -171,16 +169,24 @@ class _PaymentPageState extends State<PaymentPage>
                                 RaisedButton(
                                   onPressed: () {
                                     PaymentCard card = new PaymentCard(
-                                        number: cardNumController.text.replaceAll('-', ''),
+                                        number: cardNumController.text
+                                            .replaceAll('-', ''),
                                         expiry_month: cardDateController.text
                                             .split('/')[0],
                                         expiry_year: cardDateController.text
-                                            .split('/')[1]
-                                    );
+                                            .split('/')[1]);
                                     CheckOut payment = CheckOut();
                                     int amount = (cart.totalPrice * 100).toInt();
-                                    payment.makepayment(card,amount);
-                                    print(amount);
+                                    payment.makePayment(card, amount).then((value) {
+                                      if (value == true){
+                                     return print('okokook');
+                                      }
+                                    else {
+                                        return print('Error');
+
+                                      }
+                                    }
+                                    );
                                     Navigator.of(context).pop();
                                   },
                                   shape: RoundedRectangleBorder(
@@ -197,8 +203,7 @@ class _PaymentPageState extends State<PaymentPage>
                                 ),
                               ],
                             ),
-                          )
-                      );
+                          ));
                     },
                   );
                 });

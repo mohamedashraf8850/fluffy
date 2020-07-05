@@ -74,7 +74,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                   }),
         ),
         body: widget.len == 0 || widget.len == null
-            ? Container(color: Colors.white)
+            ? Container(color: Colors.white,child:Center(child: Text('No repeated orders yet')))
             : StreamBuilder<QuerySnapshot>(
                 stream: Connections.db.collection('Orders').snapshots(),
                 builder: (context, snapshot) {

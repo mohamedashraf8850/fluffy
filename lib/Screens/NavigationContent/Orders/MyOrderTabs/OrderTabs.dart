@@ -49,7 +49,8 @@ class _MyOrderTabsState extends State<MyOrderTabs> {
                     ],
                   );
                 } else {
-                  return SizedBox();
+                  return SizedBox(
+                  );
                 }
               })),
     );

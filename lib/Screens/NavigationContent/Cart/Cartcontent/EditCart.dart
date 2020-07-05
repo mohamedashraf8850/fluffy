@@ -9,6 +9,9 @@ class _EditCartPageState extends State<EditCartPage>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    num deliveryFees;
+    num totalP;
+
     return Consumer<Cart>(builder: (context, cart, child) {
       return Scaffold(
         body: cart.basketItems.length == 0
@@ -82,70 +85,6 @@ class _EditCartPageState extends State<EditCartPage>
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      '7.00',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 2.0),
-                                      child: Text(
-                                        'EGP',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  'Delivery Fees',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 15),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      '7.00',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 2.0),
-                                      child: Text(
-                                        'EGP',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  'Total',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 15),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
                                       cart.totalPrice.toString(),
                                       style: TextStyle(
                                           color: Colors.black,
@@ -162,6 +101,107 @@ class _EditCartPageState extends State<EditCartPage>
                                     ),
                                   ],
                                 )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Delivery fees',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 15),
+                                ),
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: Connections.db
+                                        .collection('Delivery_fees')
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        deliveryFees = snapshot
+                                            .data.documents[0].data['fees'].toDouble();
+                                        return Row(
+                                          children: snapshot.data.documents
+                                              .map((doc) {
+                                            return Row(
+                                              children: <Widget>[
+                                                Text(
+                                                    deliveryFees.toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 2.0),
+                                                  child: Text(
+                                                    'EGP',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          }).toList(),
+                                        );
+                                      } else {
+                                        return SizedBox();
+                                      }
+                                    })
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Total',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 15),
+                                ),
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: Connections.db
+                                        .collection('Delivery_fees')
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        totalP = cart.totalPrice.toDouble() +
+                                            snapshot
+                                                .data.documents[0].data['fees'];
+                                        return Row(
+                                          children: <Widget>[
+                                            Text(
+                                              totalP == null
+                                                  ? 'loading..'
+                                                  : totalP.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 2.0),
+                                              child: Text(
+                                                'EGP',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return SizedBox();
+                                      }
+                                    })
                               ],
                             ),
                           ),
