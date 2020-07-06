@@ -7,7 +7,6 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage>
     with TickerProviderStateMixin {
-
   String choice,
       daysText,
       _radioValue,
@@ -20,9 +19,9 @@ class _PaymentPageState extends State<PaymentPage>
       satText,
       allWeekText,
       disFinder,
-    paymentWay;
+      paymentWay;
 
-  int promoDiscount;
+  num promoDiscount, fPrice;
 
   bool swValue = false,
       showRepeatedOrder = false,
@@ -176,17 +175,58 @@ class _PaymentPageState extends State<PaymentPage>
                                         expiry_year: cardDateController.text
                                             .split('/')[1]);
                                     CheckOut payment = CheckOut();
-                                    int amount = (cart.totalPrice * 100).toInt();
-                                    payment.makePayment(card, amount).then((value) {
-                                      if (value == true){
-                                     return print('okokook');
-                                      }
-                                    else {
-                                        return print('Error');
+                                    int amount =
+                                        (cart.totalPrice * 100).toInt();
+                                    payment
+                                        .makePayment(card, amount)
+                                        .then((value) async {
+                                      if (value == true) {
+                                        try{
+                                          Connections.db.collection('Orders').add({
+                                            'address': '123',
+                                            'uid': '123456',
+                                            'uPhone': '01fsd2f3sd',
+                                            'normal_status': true,
+                                            'products': cart.basketItems.map((e) {
+                                              Map<String, dynamic> a = {
+                                                'id': e.id,
+                                                'name': e.title,
+                                                'img': e.image,
+                                                'qty': e.count,
+                                                'price': e.price
+                                              };
+                                              return a;
+                                            }).toList(),
+                                            'subtotal_price': 12,
+                                            'delivery_fees': 12,
+                                            'total_price': 12,
+                                            'promo_code': 'sadlskaf',
+                                            'final_price': 12,
+                                            'payment_way': 'eny',
+                                            'order_status': 'Pedding',
+                                          });
+                                          Fluttertoast.showToast(
+                                              msg: "Congratulations, your Order are Created Successfully ,now track it in Orders Page",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.TOP,
+                                              textColor: Colors.white,
+                                              backgroundColor: FluffyColors.BrandColor,
+                                              timeInSecForIosWeb: 1);
 
+                                        }catch(e){
+                                          Fluttertoast.showToast(
+                                              msg: "Error while Create your Order, please try later",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.TOP,
+                                              textColor: Colors.white,
+                                              backgroundColor: Colors.red,
+                                              timeInSecForIosWeb: 1);
+                                        }
+
+                                      } else {
+                                        return print('Error');
                                       }
-                                    }
-                                    );
+                                    });
                                     Navigator.of(context).pop();
                                   },
                                   shape: RoundedRectangleBorder(
@@ -297,58 +337,66 @@ class _PaymentPageState extends State<PaymentPage>
                           Connections.db.collection('PromoCodes').snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Form(
-                            key: promoCodeKey,
-                            child: fluffyTextField(
-                              context,
-                              validate: (value) {
-                                if (value.isEmpty) {
-                                  return 'Please enter some text';
-                                } else if (value == ' ') {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                if (promoCodeKey.currentState.validate()) {
-                                  disFinder = snapshot.data.documents
-                                      .where((l) => l.data['code'] == value)
-                                      .map((doc) =>
-                                          disFinder = doc.data['discount'])
-                                      .toString()
-                                      .replaceAll(')', '')
-                                      .toString()
-                                      .replaceAll('(', '');
-                                  if (disFinder == '()') {
-                                    Fluttertoast.showToast(
-                                        msg: "This Code are not founded",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.TOP,
-                                        textColor: Colors.white,
-                                        backgroundColor: Colors.red,
-                                        timeInSecForIosWeb: 1);
-                                  } else {
-                                    setState(() {
-                                      promoDiscount = int.parse(disFinder);
-                                    });
-                                    print(promoDiscount);
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "Congratulations, you've got a discount $disFinder% for your Cart",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.TOP,
-                                        textColor: Colors.white,
-                                        backgroundColor:
-                                            FluffyColors.BrandColor,
-                                        timeInSecForIosWeb: 1);
+                          return Consumer<Cart>(
+                              builder: (context, cart, child) {
+                            return Form(
+                              key: promoCodeKey,
+                              child: fluffyTextField(
+                                context,
+                                validate: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter some text';
+                                  } else if (value == ' ') {
+                                    return 'Please enter some text';
                                   }
-                                }
-                              },
-                              controller: promoCodeController,
-                              hintText: 'Your Promo Code',
-                              size: 60,
-                            ),
-                          );
+                                  return null;
+                                },
+                                onSaved: (String value) {
+                                  if (promoCodeKey.currentState.validate()) {
+                                    disFinder = snapshot.data.documents
+                                        .where((l) => l.data['code'] == value)
+                                        .map((doc) => doc.data['discount'])
+                                        .toString()
+                                        .replaceAll(')', '')
+                                        .toString()
+                                        .replaceAll('(', '');
+                                    if (disFinder == '()' || disFinder == '') {
+                                      Fluttertoast.showToast(
+                                          msg: "This Code are not founded",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.TOP,
+                                          textColor: Colors.white,
+                                          backgroundColor: Colors.red,
+                                          timeInSecForIosWeb: 1);
+                                    } else {
+                                      print(value);
+                                      setState(() {
+                                        promoDiscount = int.parse(disFinder);
+                                      });
+                                      num discountPrecentage =
+                                          promoDiscount / 100;
+                                      num disPrice =
+                                          cart.totalPrice * discountPrecentage;
+                                      fPrice = cart.totalPrice - disPrice;
+                                      print(fPrice);
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Congratulations, you have got a discount $disFinder% for your Cart",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.TOP,
+                                          textColor: Colors.white,
+                                          backgroundColor:
+                                              FluffyColors.BrandColor,
+                                          timeInSecForIosWeb: 1);
+                                    }
+                                  }
+                                },
+                                controller: promoCodeController,
+                                hintText: 'Your Promo Code',
+                                size: 60,
+                              ),
+                            );
+                          });
                         } else {
                           return Container(
                               child: Center(
@@ -629,5 +677,45 @@ class _PaymentPageState extends State<PaymentPage>
         daysText = daysText.replaceAll('All Week', '');
       });
     }
+  }
+
+  Future<void> createRepeatedOrder() {
+    Consumer<Cart>(builder: (context, cart, child) {
+      var a = Connections.db.collection('Orders').add({
+        'address': '',
+        'uid': '',
+        'uPhone': '',
+        'repeated_status': true,
+        'repeated_days': daysText,
+        'products': cart.basketItems,
+        'subtotal_price': '',
+        'delivery_fees': '',
+        'total_price': '',
+        'promo_code': '',
+        'final_price': '',
+        'payment_way': '',
+      });
+      return null;
+    });
+  }
+
+  Future<void> createShceduledOrder() {
+    Consumer<Cart>(builder: (context, cart, child) {
+      var a = Connections.db.collection('Orders').add({
+        'address': '',
+        'uid': '',
+        'uPhone': '',
+        'scheduled_status': true,
+        'scheduled_Date_Time': '',
+        'products': cart.basketItems,
+        'subtotal_price': '',
+        'delivery_fees': '',
+        'total_price': '',
+        'promo_code': '',
+        'final_price': '',
+        'payment_way': '',
+      });
+      return null;
+    });
   }
 }
