@@ -7,6 +7,8 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage>
     with TickerProviderStateMixin {
+  static bool showRepeatedOrder = false;
+
   String choice,
       daysText,
       _radioValue,
@@ -24,7 +26,6 @@ class _PaymentPageState extends State<PaymentPage>
   num promoDiscount, fPrice;
 
   bool swValue = false,
-      showRepeatedOrder = false,
       sun = false,
       mon = false,
       tue = false,
@@ -44,13 +45,26 @@ class _PaymentPageState extends State<PaymentPage>
         swValue = value;
         if (swValue == true) {
           showRepeatedOrder = true;
+          allWeek = true;
+          allWeekText = allWeek == true ? 'All Week' : '';
+          daysText = '$allWeekText';
         } else {
           showRepeatedOrder = false;
+          sun = false;
+          mon = false;
+          tue = false;
+          wed = false;
+          thu = false;
+          fri = false;
+          sat = false;
+          allWeek = false;
+          daysText = null;
         }
       });
 
   @override
   void initState() {
+    _onChangedRadio(false);
     setState(() {
       _radioValue = "Cash on delivery";
       allWeekText = allWeek == true ? 'All Week' : '';
@@ -151,6 +165,9 @@ class _PaymentPageState extends State<PaymentPage>
                               actions: <Widget>[
                                 RaisedButton(
                                   onPressed: () {
+                                    setState((){
+                                      _radioValue = "Cash on delivery";
+                                    });
                                     Navigator.of(context).pop();
                                   },
                                   shape: RoundedRectangleBorder(
@@ -167,67 +184,83 @@ class _PaymentPageState extends State<PaymentPage>
                                 ),
                                 RaisedButton(
                                   onPressed: () {
-                                    PaymentCard card = new PaymentCard(
-                                        number: cardNumController.text
-                                            .replaceAll('-', ''),
-                                        expiry_month: cardDateController.text
-                                            .split('/')[0],
-                                        expiry_year: cardDateController.text
-                                            .split('/')[1]);
-                                    CheckOut payment = CheckOut();
-                                    int amount =
-                                        (cart.totalPrice * 100).toInt();
-                                    payment
-                                        .makePayment(card, amount)
-                                        .then((value) async {
-                                      if (value == true) {
-                                        try{
-                                          Connections.db.collection('Orders').add({
-                                            'address': '123',
-                                            'uid': '123456',
-                                            'uPhone': '01fsd2f3sd',
-                                            'normal_status': true,
-                                            'products': cart.basketItems.map((e) {
-                                              Map<String, dynamic> a = {
-                                                'id': e.id,
-                                                'name': e.title,
-                                                'img': e.image,
-                                                'qty': e.count,
-                                                'price': e.price
-                                              };
-                                              return a;
-                                            }).toList(),
-                                            'subtotal_price': 12,
-                                            'delivery_fees': 12,
-                                            'total_price': 12,
-                                            'promo_code': 'sadlskaf',
-                                            'final_price': 12,
-                                            'payment_way': 'eny',
-                                            'order_status': 'Pedding',
-                                          });
+                                    if (cardNumController.text.isNotEmpty && cardDateController.text.isNotEmpty){
+                                      PaymentCard card = new PaymentCard(
+                                          number: cardNumController.text
+                                              .replaceAll('-', ''),
+                                          expiry_month: cardDateController.text
+                                              .split('/')[0],
+                                          expiry_year: cardDateController.text
+                                              .split('/')[1]);
+                                      CheckOut payment = CheckOut();
+                                      int amount = (cart.totalPrice * 100).toInt();
+                                      payment.makePayment(card, amount).then((value) async {
+                                        if (value == 'Approved') {
+                                          try {
+                                            Connections.db.collection('Orders').add({
+                                              'address': AddressDetailsPageState.address,
+                                              'uid': '123456',
+                                              'uPhone': AddressDetailsPageState.phoneNum,
+                                              'normal_status': AddressDetailsPageState.scheduledDateTime == '' && showRepeatedOrder == false ? true : null,
+                                              'scheduled_status': AddressDetailsPageState.scheduledDateTime != '' ? true : null,
+                                              'scheduled_Date_Time': AddressDetailsPageState.scheduledDateTime != '' ? AddressDetailsPageState.scheduledDateTime : null,
+                                              'repeated_status': showRepeatedOrder == true ? true : null,
+                                              'repeated_days': showRepeatedOrder == true ? daysText : null,
+                                              'products': cart.basketItems.map((e) {
+                                                Map<String, dynamic> a = {
+                                                  'id': e.id,
+                                                  'name': e.title,
+                                                  'img': e.image,
+                                                  'qty': e.count,
+                                                  'price': e.price
+                                                };
+                                                return a;
+                                              }).toList(),
+                                              'subtotal_price': cart.totalPrice,
+                                              'delivery_fees': EditCartPageState.deliveryFees,
+                                              'total_price': EditCartPageState.totalP,
+                                              'promo_code': disFinder,
+                                              'final_price':fPrice!= null?fPrice:EditCartPageState.totalP ,
+                                              'payment_way': 'Credit Card',
+                                              'order_status': 'Pedding',
+                                            });
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                "Congratulations, your Order Created Successfully track it in Orders Page",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.TOP,
+                                                textColor: Colors.white,
+                                                backgroundColor:
+                                                FluffyColors.BrandColor,
+                                                timeInSecForIosWeb: 1);
+                                            Navigator.of(context).pop();
+                                          } catch (e) {
+                                            Fluttertoast.showToast(
+                                                msg: "Error while Create your Order, please try later",
+                                                toastLength: Toast.LENGTH_LONG,
+                                                gravity: ToastGravity.TOP,
+                                                textColor: Colors.white,
+                                                backgroundColor: Colors.red,
+                                                timeInSecForIosWeb: 1);
+                                            setState((){
+                                              _radioValue = "Cash on delivery";
+                                            });
+                                            Navigator.of(context).pop();
+                                          }
+                                        }
+                                        else {
                                           Fluttertoast.showToast(
-                                              msg: "Congratulations, your Order are Created Successfully ,now track it in Orders Page",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.TOP,
-                                              textColor: Colors.white,
-                                              backgroundColor: FluffyColors.BrandColor,
-                                              timeInSecForIosWeb: 1);
-
-                                        }catch(e){
-                                          Fluttertoast.showToast(
-                                              msg: "Error while Create your Order, please try later",
-                                              toastLength: Toast.LENGTH_SHORT,
+                                              msg:
+                                              value.replaceAll('[', '').toString().replaceAll(']', '').toString().replaceAll('_', ' ').toUpperCase(),
+                                              toastLength: Toast.LENGTH_LONG,
                                               gravity: ToastGravity.TOP,
                                               textColor: Colors.white,
                                               backgroundColor: Colors.red,
                                               timeInSecForIosWeb: 1);
                                         }
+                                      });
+                                    }
 
-                                      } else {
-                                        return print('Error');
-                                      }
-                                    });
-                                    Navigator.of(context).pop();
                                   },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
@@ -373,12 +406,10 @@ class _PaymentPageState extends State<PaymentPage>
                                       setState(() {
                                         promoDiscount = int.parse(disFinder);
                                       });
-                                      num discountPrecentage =
-                                          promoDiscount / 100;
-                                      num disPrice =
-                                          cart.totalPrice * discountPrecentage;
+                                      num discountPrecentage = promoDiscount / 100;
+                                      num disPrice = cart.totalPrice * discountPrecentage;
                                       fPrice = cart.totalPrice - disPrice;
-                                      print(fPrice);
+
                                       Fluttertoast.showToast(
                                           msg:
                                               "Congratulations, you have got a discount $disFinder% for your Cart",
@@ -679,43 +710,4 @@ class _PaymentPageState extends State<PaymentPage>
     }
   }
 
-  Future<void> createRepeatedOrder() {
-    Consumer<Cart>(builder: (context, cart, child) {
-      var a = Connections.db.collection('Orders').add({
-        'address': '',
-        'uid': '',
-        'uPhone': '',
-        'repeated_status': true,
-        'repeated_days': daysText,
-        'products': cart.basketItems,
-        'subtotal_price': '',
-        'delivery_fees': '',
-        'total_price': '',
-        'promo_code': '',
-        'final_price': '',
-        'payment_way': '',
-      });
-      return null;
-    });
-  }
-
-  Future<void> createShceduledOrder() {
-    Consumer<Cart>(builder: (context, cart, child) {
-      var a = Connections.db.collection('Orders').add({
-        'address': '',
-        'uid': '',
-        'uPhone': '',
-        'scheduled_status': true,
-        'scheduled_Date_Time': '',
-        'products': cart.basketItems,
-        'subtotal_price': '',
-        'delivery_fees': '',
-        'total_price': '',
-        'promo_code': '',
-        'final_price': '',
-        'payment_way': '',
-      });
-      return null;
-    });
-  }
 }

@@ -2,15 +2,18 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 
 class EditCartPage extends StatefulWidget {
   @override
-  _EditCartPageState createState() => _EditCartPageState();
+  EditCartPageState createState() => EditCartPageState();
 }
 
-class _EditCartPageState extends State<EditCartPage>
+class EditCartPageState extends State<EditCartPage>
     with TickerProviderStateMixin {
+
+  static num deliveryFees;
+  static num totalP;
+
   @override
   Widget build(BuildContext context) {
-    num deliveryFees;
-    num totalP;
+
 
     return Consumer<Cart>(builder: (context, cart, child) {
       return Scaffold(
@@ -172,9 +175,7 @@ class _EditCartPageState extends State<EditCartPage>
                                         .snapshots(),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
-                                        totalP = cart.totalPrice.toDouble() +
-                                            snapshot
-                                                .data.documents[0].data['fees'];
+                                        totalP = cart.totalPrice.toDouble() + snapshot.data.documents[0].data['fees'];
                                         return Row(
                                           children: <Widget>[
                                             Text(

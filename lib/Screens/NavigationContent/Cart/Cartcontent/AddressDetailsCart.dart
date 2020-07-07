@@ -1,18 +1,25 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class AddressDetailsPage extends StatefulWidget {
   @override
-  _AddressDetailsPageState createState() => _AddressDetailsPageState();
+  AddressDetailsPageState createState() => AddressDetailsPageState();
 }
 
-class _AddressDetailsPageState extends State<AddressDetailsPage>
+class AddressDetailsPageState extends State<AddressDetailsPage>
     with TickerProviderStateMixin {
+  
+  
+   TextEditingController phoneController = new TextEditingController();
+   static String scheduledDateTime = '', address = '13, District 15' , phoneNum;
+
+
   String radioValue = 'one';
-  String choice, scheduledDateTime = '', address = '13, District 15';
-  TextEditingController phoneController = new TextEditingController();
+  String choice;
   @override
   void initState() {
+    phoneNum = phoneController.text;
     super.initState();
   }
 
@@ -74,8 +81,7 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                         String newAddress;
                         return showDialog<String>(
                           context: context,
-                          barrierDismissible:
-                              false, // dialog is dismissible with a tap on the barrier
+                          barrierDismissible: false, // dialog is dismissible with a tap on the barrier
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Enter new address'),
@@ -83,10 +89,11 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                                 children: <Widget>[
                                   new Expanded(
                                       child: new TextField(
-                                    autofocus: true,
+                                        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z0-9]'))],
+                                        autofocus: true,
                                     decoration: new InputDecoration(
                                         labelText: 'new Address',
-                                        hintText: 'ex. 13 District 15'),
+                                        hintText: 'ex. 13District15'),
                                     onChanged: (value) {
                                       setState(() {
                                         newAddress = value;
@@ -105,7 +112,7 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                                 FlatButton(
                                   child: Text('Ok'),
                                   onPressed: () {
-                                    if (newAddress != null) {
+                                    if (newAddress != null && newAddress.isNotEmpty) {
                                       print(newAddress);
                                       setState(() {
                                         address = newAddress;
@@ -139,7 +146,6 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                   size: 15,
                 ),
                 onPressed: () {
-                  print(DateTime.now());
                   DatePicker.showDateTimePicker(context,
                       showTitleActions: true,
                       minTime: DateTime.now(),
@@ -149,7 +155,11 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
                           ' Cairo(CAT)';
                       print(scheduledDateTime);
                     });
-                  }, currentTime: DateTime.now(), locale: LocaleType.ar);
+                  }, onCancel: (){
+                        setState(() {
+                          scheduledDateTime = '';
+                        });
+                      },currentTime: DateTime.now(), locale: LocaleType.ar);
                 },
               ),
             ),
@@ -178,7 +188,14 @@ class _AddressDetailsPageState extends State<AddressDetailsPage>
               padding: const EdgeInsets.all(8.0),
               child: fluffyTextField(
                 context,
+                regex_status: true,
+                regex_text: r'^[0-9]{1,11}$',
                 controller: phoneController,
+               onSaved: (value){
+                  setState((){
+                    phoneNum = phoneController.text;
+                  });
+               },
                 hintText: 'Add Another Phone No. (Optional)',
                 type: TextInputType.phone,
                 size: 60,

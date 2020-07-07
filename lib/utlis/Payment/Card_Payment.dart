@@ -9,6 +9,7 @@ class CheckOut {
 
   static const _pubKey = 'pk_test_a2917468-6966-4c29-961d-edbacba42514';
   static const _sicKey = 'sk_test_a17c4169-268e-437d-936a-1f57128f9cb5';
+String errorData;
 
   static const Map<String, String> _tokenHeader = {
     'Content-Type': 'Application/json',
@@ -30,18 +31,19 @@ class CheckOut {
 
     http.Response response = await http.post(_tokenUrl,
         headers: _tokenHeader, body: jsonEncode(body));
+    var data = jsonDecode(response.body);
+
     switch (response.statusCode) {
       case 201:
-        var data = jsonDecode(response.body);
         return data['token'];
         break;
       default:
-        print(response.body);
+        errorData = data['error_codes'].toString();
         break;
     }
   }
 
-  Future<bool> makePayment(PaymentCard card, int amount) async {
+  Future<String> makePayment(PaymentCard card, int amount) async {
     String token = await _getToken(card);
     Map<String, dynamic> body = {
       'source': {
@@ -52,14 +54,14 @@ class CheckOut {
       'currency': 'EGP'
     };
     http.Response response = await http.post(_paymentUrl, headers: _paymentHeader, body: jsonEncode(body));
+    var data = jsonDecode(response.body);
+
     switch (response.statusCode) {
-      case 201:
-        var data = jsonDecode(response.body);
-        print(data['response_summary']);
-        return true;
+    case 201:
+        return 'Approved';
         break;
       default:
-        return false;
+        return errorData;
         break;
     }
   }

@@ -1,4 +1,5 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
+import 'package:flutter/services.dart';
 
 class FluffyColors {
   static const BrandColor = Color(0xFF006661);
@@ -215,6 +216,8 @@ Widget fluffyTextField(BuildContext context,
     showPass,
     hidePass,
     validate,
+      regex_status,
+      regex_text,
     onSaved}) {
   return Container(
     width: MediaQuery.of(context).size.width - (size == null ? 30 : size),
@@ -226,6 +229,7 @@ Widget fluffyTextField(BuildContext context,
       child: TextFormField(
         controller: controller,
         validator: validate,
+        inputFormatters: regex_status == true?[WhitelistingTextInputFormatter(RegExp(regex_text))]:null,
         onFieldSubmitted: onSaved,
         style: TextStyle(fontSize: 15),
         keyboardType: type == null ? TextInputType.text : type,
