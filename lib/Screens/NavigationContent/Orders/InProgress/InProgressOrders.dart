@@ -19,7 +19,6 @@ class _MyInProgressOrdersState extends State<MyInProgressOrders> with TickerProv
   @override
   void initState() {
     super.initState();
-
   }
 
   @override

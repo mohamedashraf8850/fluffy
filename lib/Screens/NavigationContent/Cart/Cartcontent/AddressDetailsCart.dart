@@ -2,6 +2,8 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+String scheduledDateTime = '', address = '13, District 15' , phoneNum;
+
 class AddressDetailsPage extends StatefulWidget {
   @override
   AddressDetailsPageState createState() => AddressDetailsPageState();
@@ -12,7 +14,7 @@ class AddressDetailsPageState extends State<AddressDetailsPage>
   
   
    TextEditingController phoneController = new TextEditingController();
-   static String scheduledDateTime = '', address = '13, District 15' , phoneNum;
+
 
 
   String radioValue = 'one';

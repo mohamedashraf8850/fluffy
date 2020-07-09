@@ -34,7 +34,6 @@ class Cart extends ChangeNotifier {
       _items[index].count--;
       _items[index].price = _items[index].price - item.priceView;
     }
-    print(counter);
     notifyListeners();
   }
 
@@ -49,4 +48,8 @@ class Cart extends ChangeNotifier {
   List<Item> get basketItems {
     return _items;
   }
+  void clearItems() => _items.clear();
+
+  void zeroItems() => _items.length = 0;
+
 }

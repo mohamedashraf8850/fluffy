@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fluffyclientside/utlis/Exports.dart';
 
 class MainCartPage extends StatefulWidget {
@@ -5,30 +7,51 @@ class MainCartPage extends StatefulWidget {
   MainCartPageState createState() => MainCartPageState();
 }
 
-class MainCartPageState extends State<MainCartPage> {
+class MainCartPageState extends State<MainCartPage>
+    with SingleTickerProviderStateMixin {
   final _pageController = PageController();
+
   final _currentPageNotifier = ValueNotifier<int>(0);
   static const _kDuration = const Duration(milliseconds: 300);
   static const _kCurve = Curves.easeOut;
-  var titles, values, subTitles, pageIndex, subTitlePosition, btnTitle;
+  var titles,
+      values,
+      subTitles,
+      pageIndex,
+      subTitlePosition,
+      btnTitle,
+      cartView;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: new PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: cartAppBar(context,
-            title: titles,
-            value: values,
-            subTitle: subTitles,
-            subTitlePosition: subTitlePosition),
-      ),
-      body: SafeArea(
-        child: _buildBody(),
-        bottom: true,
-        right: true,
-        left: true,
-        top: true,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: new PreferredSize(
+          preferredSize: Size.fromHeight(100.0),
+          child: cartAppBar(context, () {
+            if (_currentPageNotifier.value != 3) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => BasicScaffold()),
+                  ModalRoute.withName('/'));
+            }
+          },
+              title: titles,
+              value: values,
+              subTitle: subTitles,
+              subTitlePosition: subTitlePosition),
+        ),
+        body: SafeArea(
+          child: _buildBody(),
+          bottom: true,
+          right: true,
+          left: true,
+          top: true,
+        ),
       ),
     );
   }
@@ -63,10 +86,10 @@ class MainCartPageState extends State<MainCartPage> {
                 return cart.basketItems.length != 0
                     ? Container(
                         width: MediaQuery.of(context).size.width - 50,
-                        child: RaisedButton(
+                        child: _currentPageNotifier.value != 3 ? RaisedButton(
                           onPressed: () {
-                            print(_currentPageNotifier.value);
                             if (_currentPageNotifier.value <= 2) {
+                              cartView = cart;
                               onPageViewChangeButton();
                             }
                           },
@@ -79,7 +102,7 @@ class MainCartPageState extends State<MainCartPage> {
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white, fontSize: 12),
                           ),
-                        ),
+                        ) : Container(),
                       )
                     : Container();
               }))
@@ -97,9 +120,7 @@ class MainCartPageState extends State<MainCartPage> {
             EditCartPage(),
             AddressDetailsPage(),
             PaymentPage(),
-            Container(
-                child: Center(child: Text('Create Order not Finished Yet....')))
-//            ThankYouPage(),
+            ThankYouPage(),
           ],
           scrollDirection: Axis.horizontal,
           controller: _pageController,
@@ -133,52 +154,73 @@ class MainCartPageState extends State<MainCartPage> {
         subTitlePosition = 250.0;
         btnTitle = 'Deliver';
       });
-    } else if (_currentPageNotifier.value == 3) {
-      setState(() {
-        titles = 'Thank you !';
-        values = 1.0;
-        subTitles = 'All done !';
-        subTitlePosition = 300.0;
-        btnTitle = 'Done';
-      });
     }
   }
 
-  void onPageViewChangeButton() {
+  Future<void> onPageViewChangeButton() async {
     if (_currentPageNotifier.value == 0) {
-      setState(() {
-        titles = 'Edit your Cart';
-        values = 0.25;
-        subTitles = 'Here we go';
-        subTitlePosition = 50.0;
-        btnTitle = 'Delivery information';
-      });
+      pageIndex = ++_currentPageNotifier.value;
+      _pageController.nextPage(duration: _kDuration, curve: _kCurve);
     } else if (_currentPageNotifier.value == 1) {
-      setState(() {
-        titles = 'Address details';
-        values = 0.50;
-        subTitles = 'Almost Done';
-        subTitlePosition = 120.0;
-        btnTitle = 'Payment';
-      });
+      pageIndex = ++_currentPageNotifier.value;
+      _pageController.nextPage(duration: _kDuration, curve: _kCurve);
     } else if (_currentPageNotifier.value == 2) {
-      setState(() {
-        titles = 'Payment';
-        values = 0.75;
-        subTitles = 'Final Step';
-        subTitlePosition = 250.0;
-        btnTitle = 'Deliver';
-      });
-    } else if (_currentPageNotifier.value == 3) {
-      setState(() {
-        titles = 'Thank you !';
-        values = 1.0;
-        subTitles = 'All done !';
-        subTitlePosition = 300.0;
-        btnTitle = 'Done';
-      });
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          Connections.db.collection('Orders').add({
+            'address': address,
+            'uid': '123456',
+            'uPhone': phoneNum,
+            'normal_status':
+                scheduledDateTime == '' && showRepeatedOrder == false
+                    ? true
+                    : null,
+            'scheduled_status': scheduledDateTime != '' ? true : null,
+            'scheduled_Date_Time':
+                scheduledDateTime != '' ? scheduledDateTime : null,
+            'repeated_status': showRepeatedOrder == true ? true : null,
+            'repeated_days': showRepeatedOrder == true ? daysText : null,
+            'products': cartView.basketItems.map((e) {
+              Map<String, dynamic> a = {
+                'id': e.id,
+                'name': e.title,
+                'img': e.image,
+                'qty': e.count,
+                'price': e.price
+              };
+              return a;
+            }).toList(),
+            'subtotal_price': cartView.totalPrice,
+            'delivery_fees': EditCartPageState.deliveryFees,
+            'total_price': EditCartPageState.totalP,
+            'promo_code': disFinder,
+            'final_price': fPrice != null ? fPrice : EditCartPageState.totalP,
+            'payment_way': 'Cash',
+            'order_status': 'Pedding',
+          });
+          setState(() {
+            titles = 'Thank you !';
+            values = 1.0;
+            subTitles = 'All done !';
+            subTitlePosition = 300.0;
+            cartView.clearItems();
+            cartView.zeroItems();
+          });
+          pageIndex = ++_currentPageNotifier.value;
+          _pageController.nextPage(duration: _kDuration, curve: _kCurve);
+        }
+      } on SocketException catch (_) {
+        Fluttertoast.showToast(
+            msg:
+                "You have not internet to create order, try with internet connection",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            textColor: Colors.white,
+            backgroundColor: Colors.red,
+            timeInSecForIosWeb: 1);
+        Navigator.of(context).pop();
+      }
     }
-    pageIndex = ++_currentPageNotifier.value;
-    _pageController.nextPage(duration: _kDuration, curve: _kCurve);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget cartAppBar(BuildContext context,
+Widget cartAppBar(BuildContext context,router,
     {title, value, subTitle, double, subTitlePosition}) {
   return AppBar(
     elevation: 0,
@@ -12,7 +12,7 @@ Widget cartAppBar(BuildContext context,
     ),
     leading: IconButton(
       icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-      onPressed: () => Navigator.of(context).pop(),
+        onPressed: router
     ),
     bottom: PreferredSize(
       preferredSize: Size.fromHeight(6.0),
