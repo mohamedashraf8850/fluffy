@@ -41,6 +41,7 @@ dependencies:
   solid_bottom_sheet: ^0.1.9
   cloud_firestore:
   firebase_storage:
+  firebase_auth:
 
 dev_dependencies:
   flutter_test:

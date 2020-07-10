@@ -1,7 +1,15 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget addressDetails(BuildContext context,
-    {addressControlller, blockControlller, floorControlller}) {
+final validAddress =
+    RegExp(r'^[a-zA-Z0-9_\-=@,\.]+$'); // alphanumeric and _-=@,.
+
+Widget addressDetails(BuildContext context, update,
+    {addressControlller,
+    blockControlller,
+    floorControlller,
+    addressKey,
+    blockKey,
+    floorKey}) {
   return Column(
     children: <Widget>[
       Padding(
@@ -15,39 +23,52 @@ Widget addressDetails(BuildContext context,
           ],
         ),
       ),
-      fluffyTextField(context,
-          controller: addressControlller,
-          hintText: 'Address details in Madenati, Cairo'),
+      Form(
+        key: addressKey,
+        child: fluffyTextField(context, controller: addressControlller,
+            validate: (value) {
+          if (validMail.hasMatch(value) == false) {
+            return 'do not use any thing another alphanumeric and no spaces';
+          }
+          return null;
+        }, hintText: 'Address details in Madenati, Cairo'),
+      ),
       Padding(
         padding: const EdgeInsets.all(17.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            fluffyTextField(context,
-                controller: blockControlller,
-                hintText: 'Block No.',
-                size: 200.0),
-            fluffyTextField(context,
-                controller: floorControlller,
-                hintText: 'Floor No.',
-                size: 200.0),
+            update == true
+                ? Container()
+                : Form(
+                    key: blockKey,
+                    child: fluffyTextField(
+                      context,
+                      controller: blockControlller,
+                      hintText: 'Block No.',
+                      size: 200.0,
+                      validate: (value) {
+                        if (validAddress.hasMatch(value) == false) {
+                          return 'Not valid';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+            update == true
+                ? Container()
+                : Form(
+                    key: floorKey,
+                    child: fluffyTextField(context,
+                        controller: floorControlller,
+                        hintText: 'Floor No.', validate: (value) {
+                      if (validAddress.hasMatch(value) == false) {
+                        return 'Not valid';
+                      }
+                      return null;
+                    }, size: 200.0),
+                  ),
           ],
-        ),
-      ),
-      RaisedButton(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: BorderSide(color: FluffyColors.BrandColor)),
-        color: FluffyColors.BrandColor,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Save Address',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-          ),
         ),
       ),
     ],

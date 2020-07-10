@@ -1,5 +1,4 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
-import 'package:flutter/services.dart';
 
 class FluffyColors {
   static const BrandColor = Color(0xFF006661);
@@ -27,7 +26,7 @@ Widget fluffyCart(BuildContext context) {
       ),
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => MainCartPage()),
+          MaterialPageRoute(builder: (context) => Wrapper()),
         );
       },
     );
@@ -216,9 +215,9 @@ Widget fluffyTextField(BuildContext context,
     showPass,
     hidePass,
     validate,
-      regex_status,
-      regex_text,
-    onSaved}) {
+    regex_status,
+    regex_text,
+    onSaved,enabled}) {
   return Container(
     width: MediaQuery.of(context).size.width - (size == null ? 30 : size),
     child: Theme(
@@ -228,8 +227,11 @@ Widget fluffyTextField(BuildContext context,
       ),
       child: TextFormField(
         controller: controller,
+        enabled: enabled != null ? enabled: null,
         validator: validate,
-        inputFormatters: regex_status == true?[WhitelistingTextInputFormatter(RegExp(regex_text))]:null,
+        inputFormatters: regex_status == true
+            ? [WhitelistingTextInputFormatter(RegExp(regex_text))]
+            : null,
         onFieldSubmitted: onSaved,
         style: TextStyle(fontSize: 15),
         keyboardType: type == null ? TextInputType.text : type,
@@ -267,7 +269,7 @@ asyncConfirmDialog(BuildContext context, {acceptFun}) async {
     barrierDismissible: false, // user must tap button for close dialog!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Reset settings?'),
+        title: Text('Delete Order ?'),
         content: const Text('Are you Sure to Cancel this Order? '),
         actions: <Widget>[
           FlatButton(
@@ -287,4 +289,83 @@ asyncConfirmDialog(BuildContext context, {acceptFun}) async {
       );
     },
   );
+}
+
+FirebaseUser currentUser;
+FirebaseAuth _auth = FirebaseAuth.instance;
+
+class Wrapper extends StatefulWidget {
+  @override
+  _WrapperState createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+
+  @override
+  void initState() {
+    super.initState();
+    _auth.currentUser().then((user) {
+      setState(() {
+        currentUser = user;
+      });
+      if (user == null) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MainProfilePage()));
+      } else {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MainCartPage()));
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+
+class AuthService {
+
+  // Create User Object based on Firebase User.
+  UserModel userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? UserModel(uId: user.uid, userName: user.displayName, userEmail: user.email ) : null;
+  }
+
+  // auth change user stream
+  Stream<UserModel> get currentUser {
+    return _auth.onAuthStateChanged.map((FirebaseUser user) =>  userFromFirebaseUser(user));
+  }
+
+  Future signUp(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signIn(String email, String password) async {
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
 }

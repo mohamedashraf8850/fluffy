@@ -52,3 +52,6 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:fluffyclientside/utlis/Payment/Card_Model.dart';
 export 'package:fluffyclientside/utlis/Payment/Card_Payment.dart';
 export 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
+export 'package:firebase_auth/firebase_auth.dart';
+export 'package:fluffyclientside/models/UserData.dart';
+export 'package:flutter/services.dart';

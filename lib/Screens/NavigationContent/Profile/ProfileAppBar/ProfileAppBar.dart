@@ -5,10 +5,7 @@ Widget profileAppBar(BuildContext context) {
     elevation: 0,
     brightness: Brightness.light,
     backgroundColor: Colors.white,
-    leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-      onPressed: () => Navigator.of(context).pop(),
-    ),
+    leading: Icon(Icons.verified_user, color: FluffyColors.BrandColor),
     bottom: PreferredSize(
       preferredSize: Size.fromHeight(130.0),
       child: Column(
@@ -18,7 +15,7 @@ Widget profileAppBar(BuildContext context) {
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, bottom: 10),
                 child: Text(
-                  'Good Morning, \nMohamed',
+                  'Welcome dear, \nhave a Good day 🤗',
                   style: TextStyle(
                     color: FluffyColors.BrandColor,
                     fontSize: 30,
