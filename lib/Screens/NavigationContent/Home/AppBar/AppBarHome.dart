@@ -1,6 +1,7 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
-Widget homeAppBar(context) {
+Widget homeAppBar(context,String address) {
+
   return AppBar(
     elevation: 0,
     brightness: Brightness.light,
@@ -13,8 +14,8 @@ Widget homeAppBar(context) {
           child: Column(
             children: <Widget>[
               Text(
-                '13, District 15',
-                style: TextStyle(fontSize: 15, color: FluffyColors.BrandColor),
+                address.length < 13 ?address.toString() :address.substring(0,13).toString(),
+                style: TextStyle(fontSize: 14, color: FluffyColors.BrandColor),
                 textAlign: TextAlign.left,
               ),
               Text(

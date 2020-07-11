@@ -25,7 +25,7 @@ Widget addressDetails(BuildContext context, update,
       ),
       Form(
         key: addressKey,
-        child: fluffyTextField(context, controller: addressControlller,
+        child: fluffyTextField(context, controller: addressControlller, enabled: update == false ? true : false,
             validate: (value) {
           if (validMail.hasMatch(value) == false) {
             return 'do not use any thing another alphanumeric and no spaces';

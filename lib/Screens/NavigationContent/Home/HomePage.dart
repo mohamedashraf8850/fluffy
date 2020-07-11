@@ -7,12 +7,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String name = "";
-
+String uAddress = '';
+  @override
+  void initState() {
+    if (currentUser != null) {
+      dataofUser();
+    }
+    super.initState();
+  }
+  dataofUser() async {
+    userData = await getUserData(currentUser.uid);
+    setState(() {
+      uAddress = userData.userAddress;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: homeAppBar(context),
+      appBar: homeAppBar(context,uAddress),
       backgroundColor: Colors.white,
       body: Container(
         child: Column(

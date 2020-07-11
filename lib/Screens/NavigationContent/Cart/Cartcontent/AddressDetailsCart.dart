@@ -11,11 +11,8 @@ class AddressDetailsPage extends StatefulWidget {
 
 class AddressDetailsPageState extends State<AddressDetailsPage>
     with TickerProviderStateMixin {
-  
-  
+
    TextEditingController phoneController = new TextEditingController();
-
-
 
   String radioValue = 'one';
   String choice;

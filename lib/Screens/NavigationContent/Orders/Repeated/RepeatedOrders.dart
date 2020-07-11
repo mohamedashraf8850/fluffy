@@ -32,7 +32,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
               var myRepeatedLengh = snapshot.data.documents
                   .where((l) =>
               l.data['repeated_status'] == true &&
-                  l.data['uid'] == '123456')
+                  currentUser != null ? l.data['uid'] ==  currentUser.uid : l.data['uid'] ==  'noUser')
                   .toList()
                   .length;
               controller = new TabController(length: myRepeatedLengh, vsync: this);

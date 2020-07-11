@@ -48,7 +48,7 @@ Widget personalInfo(
           key: nameKey,
           child: fluffyTextField(context,
               controller: nameControlller,
-              enabled: update == false?true:false,
+              enabled: update == false ? true : false,
               hintText: 'Your Name', validate: (String value) {
             if (value.length < 5) {
               return 'Name not long enough';
@@ -65,7 +65,7 @@ Widget personalInfo(
           key: phoneKey,
           child: fluffyTextField(context,
               controller: phoneControlller,
-              enabled: update == false?true:false,
+              enabled: update == false ? true : false,
               hintText: 'Phone No.',
               suffix: true,
               type: TextInputType.phone, validate: (String value) {
@@ -83,7 +83,7 @@ Widget personalInfo(
           key: mailKey,
           child: fluffyTextField(context,
               controller: mailControlller,
-              enabled: update == false?true:false,
+              enabled: update == false ? true : false,
               hintText: 'E-mail',
               type: TextInputType.emailAddress, validate: (String value) {
             if (value.length < 3 || validMail.hasMatch(value) == false) {
@@ -92,61 +92,62 @@ Widget personalInfo(
             return null;
           }),
         ),
-        ExpansionTile(
-          leading: Icon(
-            Icons.enhanced_encryption,
-            color: FluffyColors.BrandColor,
-          ),
-          title: Text(
-            "Password details",
-            textAlign: TextAlign.start,
-            style: TextStyle(color: FluffyColors.BrandColor, fontSize: 15),
-          ),
-          children: <Widget>[
-            Visibility(
-              child: Form(
-                key: oPassKey,
+        Visibility(
+          visible: update == true ? false : true,
+          child : ExpansionTile(
+            leading: Icon(
+              Icons.enhanced_encryption,
+              color: FluffyColors.BrandColor,
+            ),
+            title: Text(
+              "Password details",
+              textAlign: TextAlign.start,
+              style: TextStyle(color: FluffyColors.BrandColor, fontSize: 15),
+            ),
+            children: <Widget>[
+//            Visibility(
+//              child: Form(
+//                key: oPassKey,
+//                child: fluffyTextField(context,
+//                    controller: oPassControlller,
+//                    hintText: 'Old Password',
+//                    type: TextInputType.visiblePassword,
+//                    showSW: true,
+//                    hidePass: obscureText,
+//                    showPass: _toggle, validate: (String value) {
+//                  if (value.length < 8) {
+//                    return 'minimum length of an Password is 8 characters';
+//                  }
+//                  return null;
+//                }),
+//              ),
+//              visible: update == true ? false : true,
+//            ),
+//            SizedBox(
+//              height: 10,
+//            ),
+              Form(
+                key: nPassKey,
                 child: fluffyTextField(context,
-                    controller: oPassControlller,
-                    hintText: 'Old Password',
-                    type: TextInputType.visiblePassword,
+                    controller: nPassControlller,
+                    enabled: update == false ? true : false,
+                    hintText: 'Password',
                     showSW: true,
-                    hidePass: obscureText,
-                    showPass: _toggle, validate: (String value) {
+                    hidePass: obscureText, validate: (String value) {
                   if (value.length < 8) {
                     return 'minimum length of an Password is 8 characters';
                   }
                   return null;
-                }),
+                }, type: TextInputType.visiblePassword),
               ),
-              visible: update == true ? false : true,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Form(
-              key: nPassKey,
-              child: fluffyTextField(context,
-                  controller: nPassControlller,
-                  enabled: update == false?true:false,
-                  hintText: 'Password',
-                  showSW: true,
-                  hidePass: obscureText, validate: (String value) {
-                if (value.length < 8) {
-                  return 'minimum length of an Password is 8 characters';
-                }
-                return null;
-              }, type: TextInputType.visiblePassword),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Visibility(
-              child: Form(
+              SizedBox(
+                height: 10,
+              ),
+              Form(
                 key: vnPassKey,
                 child: fluffyTextField(
                   context,
-                  enabled: update == false?true:false,
+                  enabled: update == false ? true : false,
                   controller: vnPassControlller,
                   hintText: update == true
                       ? 'Confirm New Password'
@@ -162,12 +163,11 @@ Widget personalInfo(
                   type: TextInputType.visiblePassword,
                 ),
               ),
-              visible: update == true ? false : true,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ],
     );

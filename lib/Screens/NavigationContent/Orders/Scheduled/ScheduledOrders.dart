@@ -31,7 +31,8 @@ class _MyScheduledOrdersState extends State<MyScheduledOrders>
               var myScheduledLengh = snapshot.data.documents
                   .where((l) =>
               l.data['scheduled_status'] == true &&
-                  l.data['uid'] == '123456')
+                  currentUser != null ? l.data['uid'] ==  currentUser.uid : l.data['uid'] ==  'noUser')
+
                   .toList()
                   .length;
 

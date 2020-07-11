@@ -1,5 +1,7 @@
 import 'package:fluffyclientside/utlis/Exports.dart';
 
+UserModel userData;
+
 class MainProfilePage extends StatefulWidget {
   @override
   _MainProfilePageState createState() => _MainProfilePageState();
@@ -13,7 +15,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
   TextEditingController nameControlller = new TextEditingController();
   TextEditingController phoneControlller = new TextEditingController();
   TextEditingController mailControlller = new TextEditingController();
-  TextEditingController oPassControlller = new TextEditingController();
+ // TextEditingController oPassControlller = new TextEditingController();
   TextEditingController nPassControlller = new TextEditingController();
   TextEditingController vnPassControlller = new TextEditingController();
   TextEditingController loginpassControlller = new TextEditingController();
@@ -25,7 +27,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
   final GlobalKey<FormState> phoneKey = GlobalKey<FormState>();
   final GlobalKey<FormState> mailKey = GlobalKey<FormState>();
   final GlobalKey<FormState> loginmailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> oPassKey = GlobalKey<FormState>();
+ // final GlobalKey<FormState> oPassKey = GlobalKey<FormState>();
   final GlobalKey<FormState> nPassKey = GlobalKey<FormState>();
   final GlobalKey<FormState> vnPassKey = GlobalKey<FormState>();
   final GlobalKey<FormState> loginPassKey = GlobalKey<FormState>();
@@ -38,7 +40,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
 
   FirebaseUser user;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  UserModel userData;
+
 
   @override
   void initState() {
@@ -65,33 +67,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
           switchText = 'Register';
         }
       });
-  dataofUser() async {
-    userData = await getUserData(currentUser.uid);
-    setState(() {
-      nameControlller.text = userData.userName;
-      phoneControlller.text = userData.userPhone;
-      mailControlller.text = userData.userEmail;
-      oPassControlller.text = '';
-      nPassControlller.text = '';
-      vnPassControlller.text = '';
-      addressControlller.text = userData.userAddress;
-    });
-  }
 
-  Future<UserModel> getUserData(String id) async {
-    DocumentSnapshot snapshot =
-        await Connections.db.collection('Users').document(id).get();
-    if (snapshot.data == null) {
-      return Future.value(null);
-    } else {
-      try {
-        UserModel profileUser = UserModel.fromSnapshot(snapshot);
-        return profileUser;
-      } catch (err) {
-        return Future.value(null);
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,13 +114,13 @@ class _MainProfilePageState extends State<MainProfilePage> {
                               mailControlller: mailControlller,
                               nameControlller: nameControlller,
                               nPassControlller: nPassControlller,
-                              oPassControlller: oPassControlller,
+                              //oPassControlller: oPassControlller,
                               phoneControlller: phoneControlller,
                               vnPassControlller: vnPassControlller,
                               mailKey: mailKey,
                               nameKey: nameKey,
                               nPassKey: nPassKey,
-                              oPassKey: oPassKey,
+                             // oPassKey: oPassKey,
                               phoneKey: phoneKey,
                               vnPassKey: vnPassKey)
                           : loginInfo(
@@ -339,9 +315,33 @@ class _MainProfilePageState extends State<MainProfilePage> {
           ModalRoute.withName('/'));
     }
   }
+  dataofUser() async {
+    userData = await getUserData(currentUser.uid);
+    setState(() {
+      nameControlller.text = userData.userName;
+      phoneControlller.text = userData.userPhone;
+      mailControlller.text = userData.userEmail;
+      nPassControlller.text = '';
+      vnPassControlller.text = '';
+      addressControlller.text = userData.userAddress;
+    });
+  }
+}
 
 
-
+Future<UserModel> getUserData(String id) async {
+  DocumentSnapshot snapshot =
+  await Connections.db.collection('Users').document(id).get();
+  if (snapshot.data == null) {
+    return Future.value(null);
+  } else {
+    try {
+      UserModel profileUser = UserModel.fromSnapshot(snapshot);
+      return profileUser;
+    } catch (err) {
+      return Future.value(null);
+    }
+  }
 }
 /*
                 await FirebaseAuth.instance.signOut();

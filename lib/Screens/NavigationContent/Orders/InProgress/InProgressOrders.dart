@@ -35,7 +35,7 @@ class _MyInProgressOrdersState extends State<MyInProgressOrders> with TickerProv
               var inProgressLengh = snapshot.data.documents
                   .where((l) =>
               l.data['normal_status'] == true &&
-                  l.data['uid'] == '123456')
+                  currentUser != null ? l.data['uid'] ==  currentUser.uid : l.data['uid'] ==  'noUser')
                   .toList()
                   .length;
               controller = new TabController(length: inProgressLengh, vsync: this);
