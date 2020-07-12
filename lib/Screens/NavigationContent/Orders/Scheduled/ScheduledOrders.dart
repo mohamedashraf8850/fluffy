@@ -80,7 +80,7 @@ class _MyScheduledOrdersState extends State<MyScheduledOrders>
                           children: snapshot.data.documents
                               .where((l) =>
                           l.data['scheduled_status'] == true &&
-                              l.data['uid'] == '123456')
+                              currentUser != null ? l.data['uid'] ==  currentUser.uid : l.data['uid'] ==  'noUser')
                               .map((doc) {
                             return Container(
                               color: Colors.white,
@@ -157,8 +157,7 @@ class _MyScheduledOrdersState extends State<MyScheduledOrders>
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               Text(
                                                 'Delivery Time',

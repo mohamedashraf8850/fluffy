@@ -86,7 +86,7 @@ class _MyRepeatedOrdersState extends State<MyRepeatedOrders>
                         children: snapshot.data.documents
                             .where((l) =>
                         l.data['repeated_status'] == true &&
-                            l.data['uid'] == '123456')
+                            currentUser != null ? l.data['uid'] ==  currentUser.uid : l.data['uid'] ==  'noUser')
                             .map((doc) {
                           return Container(
                             color: Colors.white,

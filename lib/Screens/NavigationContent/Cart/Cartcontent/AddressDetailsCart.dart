@@ -2,7 +2,7 @@ import 'package:fluffyclientside/utlis/Exports.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-String scheduledDateTime = '', address = '13, District 15' , phoneNum;
+String scheduledDateTime = '', address = '' , phoneNum;
 
 class AddressDetailsPage extends StatefulWidget {
   @override
@@ -18,10 +18,20 @@ class AddressDetailsPageState extends State<AddressDetailsPage>
   String choice;
   @override
   void initState() {
-    phoneNum = phoneController.text;
+    if(currentUser != null){
+      dataofUser();
+    }
+
     super.initState();
   }
-
+   dataofUser() async {
+     userData = await getUserData(currentUser.uid);
+     setState(() {
+       phoneController.value  = TextEditingValue(text:userData.userPhone);
+       address = userData.userAddress;
+       phoneNum = phoneController.text;
+     });
+   }
   void radioButtonChanges(String value) {
     setState(() {
       radioValue = value;
@@ -53,7 +63,7 @@ class AddressDetailsPageState extends State<AddressDetailsPage>
               children: <Widget>[
                 RichText(
                   text: new TextSpan(
-                    text: address,
+                    text:    address.length < 13 ?address.toString() :address.substring(0,13).toString(),
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

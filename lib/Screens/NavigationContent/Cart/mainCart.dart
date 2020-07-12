@@ -165,65 +165,79 @@ class MainCartPageState extends State<MainCartPage>
       pageIndex = ++_currentPageNotifier.value;
       _pageController.nextPage(duration: _kDuration, curve: _kCurve);
     } else if (_currentPageNotifier.value == 2) {
-      try {
-        final result = await InternetAddress.lookup('google.com');
-        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          if(currentUser != null ){
-            Connections.db.collection('Orders').add({
-              'address': address,
-              'uid': currentUser.uid,
-              'uPhone': phoneNum,
-              'normal_status':
-              scheduledDateTime == '' && showRepeatedOrder == false
-                  ? true
-                  : null,
-              'scheduled_status': scheduledDateTime != '' ? true : null,
-              'scheduled_Date_Time':
-              scheduledDateTime != '' ? scheduledDateTime : null,
-              'repeated_status': showRepeatedOrder == true ? true : null,
-              'repeated_days': showRepeatedOrder == true ? daysText : null,
-              'products': cartView.basketItems.map((e) {
-                Map<String, dynamic> a = {
-                  'id': e.id,
-                  'name': e.title,
-                  'img': e.image,
-                  'qty': e.count,
-                  'price': e.price
-                };
-                return a;
-              }).toList(),
-              'subtotal_price': cartView.totalPrice,
-              'delivery_fees': EditCartPageState.deliveryFees,
-              'total_price': EditCartPageState.totalP,
-              'promo_code': disFinder,
-              'final_price': fPrice != null ? fPrice : EditCartPageState.totalP,
-              'payment_way': 'Cash',
-              'order_status': 'Pedding',
-            });
-            setState(() {
-              titles = 'Thank you !';
-              values = 1.0;
-              subTitles = 'All done !';
-              subTitlePosition = 300.0;
-              cartView.clearItems();
-              cartView.zeroItems();
-            });
-            pageIndex = ++_currentPageNotifier.value;
-            _pageController.nextPage(duration: _kDuration, curve: _kCurve);
-          }
+      if(currentUser != null){
+        try {
+          final result = await InternetAddress.lookup('google.com');
+          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+            if(currentUser != null ){
+              Connections.db.collection('Orders').add({
+                'address': address ,
+                'uid': currentUser.uid,
+                'uPhone': phoneNum,
+                'normal_status':
+                scheduledDateTime == '' && showRepeatedOrder == false
+                    ? true
+                    : null,
+                'scheduled_status': scheduledDateTime != '' ? true : null,
+                'scheduled_Date_Time':
+                scheduledDateTime != '' ? scheduledDateTime : null,
+                'repeated_status': showRepeatedOrder == true ? true : null,
+                'repeated_days': showRepeatedOrder == true ? daysText : null,
+                'products': cartView.basketItems.map((e) {
+                  Map<String, dynamic> a = {
+                    'id': e.id,
+                    'name': e.title,
+                    'img': e.image,
+                    'qty': e.count,
+                    'price': e.price
+                  };
+                  return a;
+                }).toList(),
+                'subtotal_price': cartView.totalPrice,
+                'delivery_fees': EditCartPageState.deliveryFees,
+                'total_price': EditCartPageState.totalP,
+                'promo_code': disFinder,
+                'final_price': fPrice != null ? fPrice : EditCartPageState.totalP,
+                'payment_way': 'Cash',
+                'order_status': 'Pedding',
+              });
+              setState(() {
+                titles = 'Thank you !';
+                values = 1.0;
+                subTitles = 'All done !';
+                subTitlePosition = 300.0;
+                cartView.clearItems();
+                cartView.zeroItems();
+              });
+              pageIndex = ++_currentPageNotifier.value;
+              _pageController.nextPage(duration: _kDuration, curve: _kCurve);
+            }
 
-        }
-      } on SocketException catch (_) {
+          }
+        } on SocketException catch (_) {
+          Fluttertoast.showToast(
+              msg:
+              "You have not internet to create order, try with internet connection",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.TOP,
+              textColor: Colors.white,
+              backgroundColor: Colors.red,
+              timeInSecForIosWeb: 1);
+          Navigator.of(context).pop();
+        }  }
+      else{
         Fluttertoast.showToast(
             msg:
-                "You have not internet to create order, try with internet connection",
+            "You Can not Create Order",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.TOP,
             textColor: Colors.white,
             backgroundColor: Colors.red,
             timeInSecForIosWeb: 1);
         Navigator.of(context).pop();
+
       }
+
     }
   }
 }

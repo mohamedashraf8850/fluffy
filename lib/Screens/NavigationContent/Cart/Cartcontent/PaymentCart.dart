@@ -201,7 +201,7 @@ class _PaymentPageState extends State<PaymentPage>
 //                                          try {
 //                                            Connections.db.collection('Orders').add({
 //                                              'address': AddressDetailsPageState.address,
-//                                              'uid': '123456',
+//                                              'uid': currentUser.uid',
 //                                              'uPhone': AddressDetailsPageState.phoneNum,
 //                                              'normal_status': AddressDetailsPageState.scheduledDateTime == '' && showRepeatedOrder == false ? true : null,
 //                                              'scheduled_status': AddressDetailsPageState.scheduledDateTime != '' ? true : null,
